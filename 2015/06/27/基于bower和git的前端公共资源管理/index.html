@@ -1,0 +1,561 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>基于bower和git的前端公共资源管理 | daddybh</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Chris Cheung">
+    
+
+    
+    <meta name="description" content="现有问题
+现有代码基于项目，即使公用也无法共享
+
+继续抽象出来的公用模块，也需要复制到其他目录
+
+公用模块有多份代码，需维护多份代码，容易导致代码不一致
+
+更新困难，当公用模块修改一个bug时，需要搜索所有项目进行修改
+
+模块间的依赖关系混乱
+
+
+使用bower及git解决方案公用模块抽取
+公用代码抽取出来作为一个独立的git项目
+
+初始化该项目为一个bower项目
+  该目录下执行 bower">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于bower和git的前端公共资源管理">
+<meta property="og:url" content="http://daddybh.github.io/2015/06/27/基于bower和git的前端公共资源管理/index.html">
+<meta property="og:site_name" content="daddybh">
+<meta property="og:description" content="现有问题
+现有代码基于项目，即使公用也无法共享
+
+继续抽象出来的公用模块，也需要复制到其他目录
+
+公用模块有多份代码，需维护多份代码，容易导致代码不一致
+
+更新困难，当公用模块修改一个bug时，需要搜索所有项目进行修改
+
+模块间的依赖关系混乱
+
+
+使用bower及git解决方案公用模块抽取
+公用代码抽取出来作为一个独立的git项目
+
+初始化该项目为一个bower项目
+  该目录下执行 bower">
+<meta property="og:updated_time" content="2015-06-29T10:24:23.859Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于bower和git的前端公共资源管理">
+<meta name="twitter:description" content="现有问题
+现有代码基于项目，即使公用也无法共享
+
+继续抽象出来的公用模块，也需要复制到其他目录
+
+公用模块有多份代码，需维护多份代码，容易导致代码不一致
+
+更新困难，当公用模块修改一个bug时，需要搜索所有项目进行修改
+
+模块间的依赖关系混乱
+
+
+使用bower及git解决方案公用模块抽取
+公用代码抽取出来作为一个独立的git项目
+
+初始化该项目为一个bower项目
+  该目录下执行 bower">
+
+    
+    <link rel="alternative" href="/atom.xml" title="daddybh" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="daddybh" title="daddybh"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="daddybh">daddybh</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:daddybh.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/06/27/基于bower和git的前端公共资源管理/" title="基于bower和git的前端公共资源管理" itemprop="url">基于bower和git的前端公共资源管理</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Chris Cheung" target="_blank" itemprop="author">Chris Cheung</a>
+		
+  <p class="article-time">
+    <time datetime="2015-06-27T02:53:55.000Z" itemprop="datePublished"> 發表於 2015-06-27</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#现有问题"><span class="toc-number">1.</span> <span class="toc-text">现有问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用bower及git解决方案"><span class="toc-number">2.</span> <span class="toc-text">使用bower及git解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#公用模块抽取"><span class="toc-number">2.0.1.</span> <span class="toc-text">公用模块抽取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模块安装"><span class="toc-number">2.0.2.</span> <span class="toc-text">模块安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模块更新"><span class="toc-number">2.0.3.</span> <span class="toc-text">模块更新</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意"><span class="toc-number">2.0.4.</span> <span class="toc-text">注意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题解决"><span class="toc-number">2.0.5.</span> <span class="toc-text">问题解决</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="现有问题">现有问题</h2><ul>
+<li><p>现有代码基于项目，即使公用也无法共享</p>
+</li>
+<li><p>继续抽象出来的公用模块，也需要复制到其他目录</p>
+</li>
+<li><p>公用模块有多份代码，需维护多份代码，容易导致代码不一致</p>
+</li>
+<li><p>更新困难，当公用模块修改一个bug时，需要搜索所有项目进行修改</p>
+</li>
+<li><p>模块间的依赖关系混乱</p>
+</li>
+</ul>
+<h2 id="使用bower及git解决方案">使用bower及git解决方案</h2><h4 id="公用模块抽取">公用模块抽取</h4><ul>
+<li><p>公用代码抽取出来作为一个独立的git项目</p>
+</li>
+<li><p>初始化该项目为一个bower项目</p>
+<p>  该目录下执行 <code>bower init</code></p>
+</li>
+<li><p>添加公用代码，并把代码提交到gitlab</p>
+</li>
+</ul>
+<h4 id="模块安装">模块安装</h4><ul>
+<li><p>首先需要执行<code>bower init</code> 初始化调用目录</p>
+<p>  初始化为bower项目的目的是为了保存该项目所引用的模块</p>
+</li>
+<li><p>执行<code>bower install + git地址 --save-dev</code></p>
+<p>  例如</p>
+  <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bower </span>install http://fedgit.teiron.com/zhangbh/<span class="keyword">bower-test.git </span>--save-dev</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>代码会下载到bower_components目录下，页面可直接应用bower_components下的文件</p>
+<p>  例如</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"bower_components/bower-test/index.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="模块更新">模块更新</h4><ul>
+<li><p>更新模块时，需要更新bower.json文件的版本号，bower通过该版本号来判断，所以记得更新公用项目时，更新版本号</p>
+</li>
+<li><p>调用方通过执行<code>bower update + 模块名</code> 来下载最新代码</p>
+</li>
+</ul>
+<h4 id="注意">注意</h4><ul>
+<li><p>抽取公用代码，保存在git服务器，公用模块必须有一定可复用性，不能依赖具体项目</p>
+</li>
+<li><p>bower_components不能提交源代码管理（git/svn）</p>
+</li>
+<li><p>用户下载代码后，执行<code>bower install</code> 安装项目依赖模块</p>
+</li>
+</ul>
+<h4 id="问题解决">问题解决</h4><ul>
+<li><p>公用模块只存一份代码</p>
+</li>
+<li><p>调用方无痛更新模块</p>
+</li>
+<li><p>模块依赖关系由bower解决 </p>
+</li>
+<li><p>提高代码复用率</p>
+</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/git/">git</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/bower/">bower</a><a href="/tags/git/">git</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://daddybh.github.io/2015/06/27/基于bower和git的前端公共资源管理/" data-title="基于bower和git的前端公共资源管理 | daddybh" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/06/29/hello-world/" title="Hello World">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Hello World</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/06/27/grunt应用/"  title="grunt应用">
+ <strong>下一篇：</strong><br/> 
+ <span>grunt应用
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#现有问题"><span class="toc-number">1.</span> <span class="toc-text">现有问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用bower及git解决方案"><span class="toc-number">2.</span> <span class="toc-text">使用bower及git解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#公用模块抽取"><span class="toc-number">2.0.1.</span> <span class="toc-text">公用模块抽取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模块安装"><span class="toc-number">2.0.2.</span> <span class="toc-text">模块安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模块更新"><span class="toc-number">2.0.3.</span> <span class="toc-text">模块更新</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意"><span class="toc-number">2.0.4.</span> <span class="toc-text">注意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题解决"><span class="toc-number">2.0.5.</span> <span class="toc-text">问题解决</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/git/" title="git">git<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工程化/" title="工程化">工程化<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/grunt/" title="grunt">grunt<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工程化/" title="工程化">工程化<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/构建/" title="构建">构建<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/bower/" title="bower">bower<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/branch/" title="branch">branch<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="Chris Cheung">Chris Cheung</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

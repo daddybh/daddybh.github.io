@@ -1,0 +1,494 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>grunt 实现项目构建 | daddybh</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Chris Cheung">
+    
+
+    
+    <meta name="description" content="背景随着模块化进展，项目js文件越来越多，下面是越狱应用与正版应用的js引用， 真正发布产品过程，不可能直接将该文件丢到生产环境。因此，发布前需要进行以下操作，压缩，合并js/css文件，编译模板，生成雪碧图, 文件进行缓存处理(filerev)下面代码片段是越狱应用的js引用列表：
+12345678910&amp;lt;script src=&quot;/common/js/jquery-1.7.2.min.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="grunt 实现项目构建">
+<meta property="og:url" content="http://daddybh.github.io/2015/06/27/grunt-实现项目构建/index.html">
+<meta property="og:site_name" content="daddybh">
+<meta property="og:description" content="背景随着模块化进展，项目js文件越来越多，下面是越狱应用与正版应用的js引用， 真正发布产品过程，不可能直接将该文件丢到生产环境。因此，发布前需要进行以下操作，压缩，合并js/css文件，编译模板，生成雪碧图, 文件进行缓存处理(filerev)下面代码片段是越狱应用的js引用列表：
+12345678910&amp;lt;script src=&quot;/common/js/jquery-1.7.2.min.js">
+<meta property="og:updated_time" content="2015-06-29T10:24:23.857Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="grunt 实现项目构建">
+<meta name="twitter:description" content="背景随着模块化进展，项目js文件越来越多，下面是越狱应用与正版应用的js引用， 真正发布产品过程，不可能直接将该文件丢到生产环境。因此，发布前需要进行以下操作，压缩，合并js/css文件，编译模板，生成雪碧图, 文件进行缓存处理(filerev)下面代码片段是越狱应用的js引用列表：
+12345678910&amp;lt;script src=&quot;/common/js/jquery-1.7.2.min.js">
+
+    
+    <link rel="alternative" href="/atom.xml" title="daddybh" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="daddybh" title="daddybh"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="daddybh">daddybh</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:daddybh.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/06/27/grunt-实现项目构建/" title="grunt 实现项目构建" itemprop="url">grunt 实现项目构建</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Chris Cheung" target="_blank" itemprop="author">Chris Cheung</a>
+		
+  <p class="article-time">
+    <time datetime="2015-06-27T02:48:40.000Z" itemprop="datePublished"> 發表於 2015-06-27</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构建过程"><span class="toc-number">2.</span> <span class="toc-text">构建过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#难点"><span class="toc-number">3.</span> <span class="toc-text">难点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#useminPrepare_与_usemin"><span class="toc-number">4.</span> <span class="toc-text">useminPrepare 与 usemin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#grunt-filerev插件"><span class="toc-number">5.</span> <span class="toc-text">grunt-filerev插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后"><span class="toc-number">6.</span> <span class="toc-text">最后</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="背景">背景</h2><p>随着模块化进展，项目js文件越来越多，下面是越狱应用与正版应用的js引用， 真正发布产品过程，不可能直接将该文件丢到生产环境。<br>因此，发布前需要进行以下操作，<code>压缩，合并js/css文件</code>，<code>编译模板</code>，<code>生成雪碧图</code>, <code>文件进行缓存处理(filerev)</code><br>下面代码片段是越狱应用的js引用列表：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/common/js/jquery-1.7.2.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/common/js/json3.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/common/js/jqplugin.hashchange.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/common/js/tr.jqplugin.slide.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">... 此处省去20个引用...</span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/common/js/iosV2/topicDetailController.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/common/js/iosV2/searchController.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/common/js/iosV2/main.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>本文档将介绍如何通过<code>useminPrepare</code> 和 <code>usemin</code>来构建一个<code>build</code>流程。</p>
+<h2 id="构建过程">构建过程</h2><p>构建的最终结果是需要一个能正常运行的，可发布的程序包，同时，我们要保留源代码的结构以及原来的样子。<br>因此我们需要把程序构建（build）到子目录(dist)，这时，一个构建过程大概需要以下步骤：</p>
+<ul>
+<li><p>清空dist目录，清空以前的构建代码，使之后编译到该文件夹的文件都是新的</p>
+</li>
+<li><p>文件复制（copy），由于我们要保留源文件，因此我们把文件复制到指定目录，再进行后续处理</p>
+</li>
+<li><p>合并js文件(concat)</p>
+</li>
+<li><p>压缩合并后的js(uglify)</p>
+</li>
+<li><p>计算压缩后js/css的md5或sha1值，替换原来的引用</p>
+</li>
+</ul>
+<p>实现以上步骤，则需要一系列的grunt任务</p>
+<h2 id="难点">难点</h2><p>其实构建过程很简单，无非是压缩、合并，其中最麻烦的是，如何通过gruntjs，自动的去替换原来的20几个应用</p>
+<h2 id="useminPrepare_与_usemin">useminPrepare 与 usemin</h2><p>整个构建流程主要通过<code>grunt-contrib-useminPrepare</code> 和<code>grunt-usemin</code>实现<br>useminPrepare原理是通过类似 <code>&lt;!-- build:js /common/js/xxx.js--&gt; &lt;!-- endbuild --&gt;</code>的注释块包含需要替换的js或css文件列表<br>动态生成concat，uglify，cssmin的任务，然后替换原来的引用<br>有了它，我们不需要在Gruntfile.js中的concat，uglify，cssmin添加一堆文件名<br>只需在最终build task中，添加concat，uglify，cssmin任务就可以<br>下面build任务可以很清楚看出构建流程<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">grunt.registerTask(<span class="symbol">'build'</span>, [<span class="symbol">'clean'</span>,</span><br><span class="line">                            <span class="symbol">'copy</span>:build',</span><br><span class="line">                            <span class="symbol">'useminPrepare'</span>,</span><br><span class="line">                            <span class="symbol">'concat'</span>,</span><br><span class="line">                            <span class="symbol">'cssmin'</span>,</span><br><span class="line">                            <span class="symbol">'uglify'</span>,</span><br><span class="line">                            <span class="symbol">'filerev'</span>,</span><br><span class="line">                            <span class="symbol">'usemin'</span>]);</span><br></pre></td></tr></table></figure></p>
+<p>useminPrepare和usemin的配置也非常简单</p>
+<blockquote>
+<p>注意：</p>
+<ul>
+<li>useminPrepare需要添加 options:{ root :”.”} , 否则无法正常生成文件</li>
+<li>usemin 需要制定assetsDirs 为dist/, 后续使用filerev时，才能正常找到对应的文件</li>
+<li>坑爹的目录关系！！</li>
+</ul>
+</blockquote>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">useminPrepare: </span><span class="expression">&#123;</span><br><span class="line">        <span class="variable">html</span>: ['<span class="variable">dist</span><span class="end-block">/jb</span>_<span class="variable">app</span><span class="end-block">/index.html</span>','<span class="variable">dist</span><span class="end-block">/zb</span>_<span class="variable">pp</span>_<span class="variable">v</span>2<span class="end-block">/index.html</span>'],</span><br><span class="line">        <span class="variable">options</span>:&#123;</span><br><span class="line">            <span class="variable">root</span> :<span class="string">"."</span></span><br><span class="line">        &#125;</span><span class="xml"></span><br><span class="line">    &#125;,</span><br><span class="line">    usemin:</span><span class="expression">&#123;</span><br><span class="line">        <span class="variable">html</span>: ['<span class="variable">dist</span><span class="end-block">/jb</span>_<span class="variable">app</span><span class="end-block">/index.html</span>','<span class="variable">dist</span><span class="end-block">/zb</span>_<span class="variable">pp</span>_<span class="variable">v</span>2<span class="end-block">/index.html</span>'],</span><br><span class="line">        <span class="variable">options</span>: &#123;</span><br><span class="line">            <span class="variable">assetsDirs</span>: ['<span class="variable">dist</span>/'] //指定改目录，让<span class="variable">usemin</span>寻找用来替换<span class="variable">revved</span>文件</span><br><span class="line">        &#125;</span><span class="xml"></span><br><span class="line">    &#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="grunt-filerev插件">grunt-filerev插件</h2><p>以前对于静态文件的处理方法，在文件后面加上?v=10001 或者加上修改时间?update=20140203，这么做的问题虽然解决缓存问题，但是：</p>
+<ol>
+<li>需要手工修改静态文件</li>
+<li>如果文件没做出任何修改时，有时候会导致客户端重新加载文件</li>
+</ol>
+<p>该插件按照一定的算法（md5，sha1等）生成一个hash值，然后取hash值的前几位作为文件名的一部分, 这样做的好处是，对于没修改过的文件，我们可以永久缓存到客户端</p>
+<h2 id="最后">最后</h2><p>依赖的grunt插件有 <code>grunt-contrib-copy</code>, <code>grunt-contrib-clean</code>, <code>grunt-contrib-useminPrepare</code>, <code>grunt-contrib-concat</code>, <code>grunt-contrib-cssmin</code>, <code>grunt-contrib-uglify</code>, <code>grunt-usemin</code>,<code>grunt-filerev</code></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/工程化/">工程化</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/grunt/">grunt</a><a href="/tags/工程化/">工程化</a><a href="/tags/构建/">构建</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://daddybh.github.io/2015/06/27/grunt-实现项目构建/" data-title="grunt 实现项目构建 | daddybh" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/06/27/grunt应用/" title="grunt应用">
+  <strong>上一篇：</strong><br/>
+  <span>
+  grunt应用</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/06/27/万能的git分支管理/"  title="万能的git分支管理">
+ <strong>下一篇：</strong><br/> 
+ <span>万能的git分支管理
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构建过程"><span class="toc-number">2.</span> <span class="toc-text">构建过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#难点"><span class="toc-number">3.</span> <span class="toc-text">难点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#useminPrepare_与_usemin"><span class="toc-number">4.</span> <span class="toc-text">useminPrepare 与 usemin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#grunt-filerev插件"><span class="toc-number">5.</span> <span class="toc-text">grunt-filerev插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后"><span class="toc-number">6.</span> <span class="toc-text">最后</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/git/" title="git">git<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工程化/" title="工程化">工程化<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/grunt/" title="grunt">grunt<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工程化/" title="工程化">工程化<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/构建/" title="构建">构建<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/bower/" title="bower">bower<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/branch/" title="branch">branch<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="Chris Cheung">Chris Cheung</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

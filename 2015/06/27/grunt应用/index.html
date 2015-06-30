@@ -1,0 +1,558 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>grunt应用 | daddybh</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Chris Cheung">
+    
+
+    
+    <meta name="description" content="介绍gruntjs是一个基于nodejs的自动构建化工具
+Gruntjs官网
+Getting Start
+nodejs1234Node.js is a platform built on Chrome&apos;s JavaScript runtime foreasily building fast, scalable network applications. Node.js uses an event-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="grunt应用">
+<meta property="og:url" content="http://daddybh.github.io/2015/06/27/grunt应用/index.html">
+<meta property="og:site_name" content="daddybh">
+<meta property="og:description" content="介绍gruntjs是一个基于nodejs的自动构建化工具
+Gruntjs官网
+Getting Start
+nodejs1234Node.js is a platform built on Chrome&apos;s JavaScript runtime foreasily building fast, scalable network applications. Node.js uses an event-">
+<meta property="og:updated_time" content="2015-06-29T10:24:23.857Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="grunt应用">
+<meta name="twitter:description" content="介绍gruntjs是一个基于nodejs的自动构建化工具
+Gruntjs官网
+Getting Start
+nodejs1234Node.js is a platform built on Chrome&apos;s JavaScript runtime foreasily building fast, scalable network applications. Node.js uses an event-">
+
+    
+    <link rel="alternative" href="/atom.xml" title="daddybh" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="daddybh" title="daddybh"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="daddybh">daddybh</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:daddybh.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/06/27/grunt应用/" title="grunt应用" itemprop="url">grunt应用</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Chris Cheung" target="_blank" itemprop="author">Chris Cheung</a>
+		
+  <p class="article-time">
+    <time datetime="2015-06-27T02:52:30.000Z" itemprop="datePublished"> 發表於 2015-06-27</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#nodejs"><span class="toc-number">1.0.1.</span> <span class="toc-text">nodejs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Gruntjs可以做什么"><span class="toc-number">1.0.2.</span> <span class="toc-text">Gruntjs可以做什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Why_Gruntjs"><span class="toc-number">1.0.3.</span> <span class="toc-text">Why Gruntjs</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#目录结构及源代码管理"><span class="toc-number">2.0.1.</span> <span class="toc-text">目录结构及源代码管理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见插件"><span class="toc-number">3.</span> <span class="toc-text">常见插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gruntjs_vs_(gulp)[http://gulpjs-com/]"><span class="toc-number">4.</span> <span class="toc-text">Gruntjs vs (gulp)[http://gulpjs.com/]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reference"><span class="toc-number">5.</span> <span class="toc-text">reference</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="介绍">介绍</h2><p>gruntjs是一个基于nodejs的自动构建化工具</p>
+<p><a href="http://gruntjs.com/" target="_blank" rel="external">Gruntjs官网</a></p>
+<p><a href="http://gruntjs.com/getting-started" target="_blank" rel="external">Getting Start</a></p>
+<h4 id="nodejs"><a href="http://nodejs.org/" target="_blank" rel="external">nodejs</a></h4><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Node.js <span class="keyword">is</span> a platform built <span class="function_start"><span class="keyword">on</span></span> Chrome's JavaScript runtime <span class="keyword">for</span></span><br><span class="line">easily building fast, scalable network applications. Node.js uses an event-driven,</span><br><span class="line">non-blocking I/O model <span class="keyword">that</span> makes <span class="keyword">it</span> lightweight <span class="keyword">and</span> efficient,</span><br><span class="line">perfect <span class="keyword">for</span> data-intensive <span class="type">real</span>-<span class="property">time</span> applications <span class="keyword">that</span> <span class="command">run</span> across distributed devices.</span><br></pre></td></tr></table></figure>
+<ul>
+<li>基于Chrome v8引擎</li>
+<li>事件驱动</li>
+<li>非阻塞io模型</li>
+<li>适合高并发，实时应用</li>
+</ul>
+<h4 id="Gruntjs可以做什么">Gruntjs可以做什么</h4><ul>
+<li>文件压缩</li>
+<li>代码合并</li>
+<li>图片处理（雪碧图合并，图片压缩等）</li>
+<li>自动化测试</li>
+<li>代码预编译（模板，sass等）</li>
+<li>…</li>
+</ul>
+<h4 id="Why_Gruntjs">Why Gruntjs</h4><ul>
+<li>提高开发效率 (文件监听watch，自动刷新，自动构建等)</li>
+<li>提高性能 （js、css合并压缩，图片压缩，雪碧图等）</li>
+<li>质量保证（jslint， jshint）</li>
+</ul>
+<h2 id="安装">安装</h2><ul>
+<li><p>安装nodejs</p>
+<p>nodejs安装包<br><a href="http://nodejs.org/dist/v0.10.28/node-v0.10.28-x86.msi" target="_blank" rel="external">32-bit</a><br><a href="http://nodejs.org/dist/v0.10.28/x64/node-v0.10.28-x64.msi" target="_blank" rel="external">64-bit</a></p>
+<p>nodejs 安装包自带<a href="https://www.npmjs.org/" target="_blank" rel="external">npm(Node Packaged Modules)</a>管理工具</p>
+<p>所有grunt插件都部署在npm的镜像上，用户可以通过</p>
+<blockquote>
+<p>npm config set registry 镜像地址</p>
+</blockquote>
+<p>国内镜像地址有：</p>
+<blockquote>
+<p><a href="https://npm.taobao.org/" target="_blank" rel="external">https://npm.taobao.org/</a></p>
+<p><a href="http://registry.cnpmjs.org/" target="_blank" rel="external">http://registry.cnpmjs.org/</a></p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><p>安装grunt-cli（grunt命令行）</p>
+<blockquote>
+<p>npm install -g grunt-cli</p>
+</blockquote>
+</li>
+<li><p>定位到你项目目录</p>
+<blockquote>
+<p>cd d:\www\branches\applepc\ios_v2</p>
+</blockquote>
+</li>
+<li><p>初始化，根据提示输入项目信息，初始化完成后，会自动生成package.json文件</p>
+<blockquote>
+<p>npm init</p>
+</blockquote>
+</li>
+<li><p>项目根目录，添加Gruntfile.js（文件名<code>区分</code>大小写）, Gruntfile.js内容基本结构如下：</p>
+  <figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">module</span>.<span class="title">exports</span> =</span> <span class="function"><span class="keyword">function</span><span class="params">(grunt)</span> &#123;</span></span><br><span class="line">    grunt.initConfig<span class="params">(&#123;</span><br><span class="line"></span><br><span class="line">    &#125;)</span>;</span><br><span class="line"></span><br><span class="line">    grunt.loadNpmTasks<span class="params">('grunt-contrib-uglify')</span>;</span><br><span class="line"></span><br><span class="line">    grunt.registerTask<span class="params">('default', ['uglify'])</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过npm install 安装你需要的插件. <code>注意:</code> 这里加上<code>--save-dev</code>参数，<br>安装完成后，会将该插件添加到package.json <code>devDependencies</code>字段</p>
+<blockquote>
+<p>npm install grunt-contrib-copy —save-dev</p>
+<p>npm install grunt-contrib-watch —save-dev</p>
+</blockquote>
+</li>
+<li><p>回到Gruntfile.js中，为新安装的插件添加任务</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">grunt</span>) </span>&#123;</span><br><span class="line">    grunt.initConfig(&#123;</span><br><span class="line">       copy:&#123;<span class="comment">//配置copy任务，详细配置信息，请参考grunt-contrib-copy github页</span></span><br><span class="line">            main:&#123;</span><br><span class="line">                files:[</span><br><span class="line">                    &#123;</span><br><span class="line">                        cwd: <span class="string">'common/tpl/appDetails/compiled/'</span>,</span><br><span class="line">                        src: <span class="string">'template.js'</span>,</span><br><span class="line">                        dest: <span class="string">'common/js/bcvy6gt37&amp;[8fgt4!3$8gfg82799/'</span>,</span><br><span class="line">                        expand: <span class="literal">true</span>,</span><br><span class="line">                        rename : <span class="function"><span class="keyword">function</span>(<span class="params">dest, src</span>)</span>&#123;</span><br><span class="line">                            <span class="keyword">return</span> dest + <span class="string">"appDetailsTpl.js"</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-contrib-uglify'</span>);</span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-contrib-copy'</span>);<span class="comment">//加载任务</span></span><br><span class="line"></span><br><span class="line">    grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'uglify'</span>]);</span><br><span class="line">    grunt.registerTask(<span class="string">'copy'</span>, [<span class="string">'copy'</span>]);<span class="comment">//注册复制任务</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行<code>grunt copy</code>就可以执行复制任务</p>
+</li>
+<li><p>自定义任务, grunt支持自定义任务，以腾讯tmod为例，请参考下面代码片段, 运行<code>grunt ct</code>可执行simple ArtTemaplte模板预编译</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">grunt</span>) </span>&#123;</span><br><span class="line">    grunt.initConfig(&#123;</span><br><span class="line">       copy:&#123;<span class="comment">//配置copy任务，详细配置信息，请参考grunt-contrib-copy github页</span></span><br><span class="line">            main:&#123;</span><br><span class="line">                files:[</span><br><span class="line">                    &#123;</span><br><span class="line">                        cwd: <span class="string">'common/tpl/appDetails/compiled/'</span>,</span><br><span class="line">                        src: <span class="string">'template.js'</span>,</span><br><span class="line">                        dest: <span class="string">'common/js/bcvy6gt37&amp;[8fgt4!3$8gfg82799/'</span>,</span><br><span class="line">                        expand: <span class="literal">true</span>,</span><br><span class="line">                        rename : <span class="function"><span class="keyword">function</span>(<span class="params">dest, src</span>)</span>&#123;</span><br><span class="line">                            <span class="keyword">return</span> dest + <span class="string">"appDetailsTpl.js"</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    grunt.registerTask(<span class="string">'ct'</span>, <span class="string">'complie template'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> TmodJS = <span class="built_in">require</span>(<span class="string">"tmodjs"</span>);</span><br><span class="line">        <span class="keyword">var</span> path = <span class="string">'./common/tpl/appDetails/'</span>;</span><br><span class="line">        <span class="keyword">var</span> options = &#123;</span><br><span class="line">            output: <span class="string">'compiled'</span>,</span><br><span class="line">            helpers:<span class="string">'helpers.js'</span>,</span><br><span class="line">            charset: <span class="string">'utf-8'</span>,</span><br><span class="line">            debug: <span class="literal">false</span> <span class="comment">// 此字段不会保存在配置中</span></span><br><span class="line">        &#125;</span><br><span class="line">        TmodJS.init(path, options);</span><br><span class="line">        TmodJS.compile([], <span class="literal">true</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-contrib-uglify'</span>);</span><br><span class="line">    grunt.loadNpmTasks(<span class="string">'grunt-contrib-copy'</span>);<span class="comment">//加载任务</span></span><br><span class="line"></span><br><span class="line">    grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'uglify'</span>]);</span><br><span class="line">    grunt.registerTask(<span class="string">'copy'</span>, [<span class="string">'copy'</span>]);<span class="comment">//注册复制任务</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="目录结构及源代码管理">目录结构及源代码管理</h4><ul>
+<li>node_modules目录(svn ignores)</li>
+<li>package.json 及Gruntfile.js (svn)</li>
+<li>执行npm install</li>
+</ul>
+<h2 id="常见插件">常见插件</h2><ul>
+<li><code>grunt-contrib-uglify</code> 文件压缩工具 （<a href="https://github.com/gruntjs/grunt-contrib-uglify" target="_blank" rel="external">github</a>）</li>
+<li><code>grunt-contrib-copy</code> 文件复制  （<a href="https://github.com/gruntjs/grunt-contrib-copy" target="_blank" rel="external">github</a>）</li>
+<li><code>grunt-css-sprite</code> 从css文件中提取图片，生成雪碧图 (<a href="https://github.com/laoshu133/grunt-css-sprite" target="_blank" rel="external">github</a>)</li>
+<li><code>grunt-contrib-watch</code> 检测文件变化，然后执行相应的任务 (<a href="https://github.com/gruntjs/grunt-contrib-copy" target="_blank" rel="external">github</a>)</li>
+<li>更多插件，请参考官网(<a href="http://gruntjs.com/plugins" target="_blank" rel="external">Grunt.js官网插件页</a>)</li>
+</ul>
+<h2 id="Gruntjs_vs_(gulp)[http://gulpjs-com/]">Gruntjs vs (gulp)[<a href="http://gulpjs.com/" target="_blank" rel="external">http://gulpjs.com/</a>]</h2><ul>
+<li>Gruntjs配置难度高</li>
+<li>任务配置不同，Gruntjs基于配置，gulp基于代码</li>
+<li>gulp接口更优雅</li>
+<li>gulp生态系统不如Grunt，日常使用应该足够</li>
+<li>Grunt的I/O操作是瓶颈，适用小项目</li>
+</ul>
+<h2 id="reference">reference</h2><p><a href="http://gulpjs.com/" target="_blank" rel="external">gulpjs官网</a></p>
+<p><a href="http://markdalgleish.github.io/presentation-build-wars-gulp-vs-grunt/" target="_blank" rel="external">presentation build wars gulp vs grunt</a></p>
+<p><a href="http://jaysoo.ca/2014/01/27/gruntjs-vs-gulpjs/" target="_blank" rel="external">Gruntjs vs gulpjs</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/工程化/">工程化</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/grunt/">grunt</a><a href="/tags/工程化/">工程化</a><a href="/tags/构建/">构建</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://daddybh.github.io/2015/06/27/grunt应用/" data-title="grunt应用 | daddybh" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/06/27/基于bower和git的前端公共资源管理/" title="基于bower和git的前端公共资源管理">
+  <strong>上一篇：</strong><br/>
+  <span>
+  基于bower和git的前端公共资源管理</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/06/27/grunt-实现项目构建/"  title="grunt 实现项目构建">
+ <strong>下一篇：</strong><br/> 
+ <span>grunt 实现项目构建
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#nodejs"><span class="toc-number">1.0.1.</span> <span class="toc-text">nodejs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Gruntjs可以做什么"><span class="toc-number">1.0.2.</span> <span class="toc-text">Gruntjs可以做什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Why_Gruntjs"><span class="toc-number">1.0.3.</span> <span class="toc-text">Why Gruntjs</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#目录结构及源代码管理"><span class="toc-number">2.0.1.</span> <span class="toc-text">目录结构及源代码管理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见插件"><span class="toc-number">3.</span> <span class="toc-text">常见插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gruntjs_vs_(gulp)[http://gulpjs-com/]"><span class="toc-number">4.</span> <span class="toc-text">Gruntjs vs (gulp)[http://gulpjs.com/]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reference"><span class="toc-number">5.</span> <span class="toc-text">reference</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/git/" title="git">git<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工程化/" title="工程化">工程化<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/grunt/" title="grunt">grunt<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工程化/" title="工程化">工程化<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/构建/" title="构建">构建<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/bower/" title="bower">bower<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/branch/" title="branch">branch<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="Chris Cheung">Chris Cheung</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
