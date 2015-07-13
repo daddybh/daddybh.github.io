@@ -4,26 +4,29 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Hello World | daddybh</title>
+    <title>react render函数剖析 | daddybh</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Chris Cheung">
     
 
     
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+    <meta name="description" content="renderrender: function(nextElement, container, callback)src/renderers/dom/client/ReactMount.js#599
+render参数：nextElement 通过react.createElement创建的元素container:  nextElement的容器callback:   完成render后的回调函数
+s">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://daddybh.github.io/2015/06/29/hello-world/index.html">
+<meta property="og:title" content="react render函数剖析">
+<meta property="og:url" content="http://daddybh.github.io/2015/06/28/react-render函数剖析/index.html">
 <meta property="og:site_name" content="daddybh">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2015-06-29T10:24:23.858Z">
+<meta property="og:description" content="renderrender: function(nextElement, container, callback)src/renderers/dom/client/ReactMount.js#599
+render参数：nextElement 通过react.createElement创建的元素container:  nextElement的容器callback:   完成render后的回调函数
+s">
+<meta property="og:updated_time" content="2015-07-13T07:37:30.465Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="react render函数剖析">
+<meta name="twitter:description" content="renderrender: function(nextElement, container, callback)src/renderers/dom/client/ReactMount.js#599
+render参数：nextElement 通过react.createElement创建的元素container:  nextElement的容器callback:   完成render后的回调函数
+s">
 
     
     <link rel="alternative" href="/atom.xml" title="daddybh" type="application/atom+xml">
@@ -83,14 +86,14 @@ Quick">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/06/29/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+      <a href="/2015/06/28/react-render函数剖析/" title="react render函数剖析" itemprop="url">react render函数剖析</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Chris Cheung" target="_blank" itemprop="author">Chris Cheung</a>
 		
   <p class="article-time">
-    <time datetime="2015-06-29T10:24:23.858Z" itemprop="datePublished"> 發表於 2015-06-29</time>
+    <time datetime="2015-06-28T09:42:55.000Z" itemprop="datePublished"> 發表於 2015-06-28</time>
     
   </p>
 </header>
@@ -99,24 +102,39 @@ Quick">
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+			
 		
 		</div>
 		
-		<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-  
+		<p>render<br><code>render: function(nextElement, container, callback)</code><br>src/renderers/dom/client/ReactMount.js#599</p>
+<p>render参数：<br>nextElement 通过react.createElement创建的元素<br>container:  nextElement的容器<br>callback:   完成render后的回调函数</p>
+<p>step1:</p>
+<p>src\shared\vendor\core\invariant.js<br>invariant 当条件为false时，抛出异常<br>src\shared\vendor\core\waring.js<br>warnging  当条件为false时，在控制台打印第二个参数的文字</p>
+<p>调用 _renderSubtreeIntoContainer</p>
+<ol>
+<li><p>判断nextElement是否为一个object，且有_isReactElement 属性，并抛出异常</p>
+</li>
+<li><p>如果容器是body，输出warning信息</p>
+</li>
+<li><p>检查容器是否已经渲染了其它的component</p>
+<p> 如果已经渲染，判断nextElement跟缓存中的element 是否一致</p>
+<pre><code>如果不一致，且缓存中id已经变化，则抛出异常
+如果是同个元素，则更新nodeCache-&gt;新传入的rootNode
+</code></pre><p> 如果已经渲染，根据rootID（从getReactRootID获取）， 从instancesByReactRootID缓存中获取一个实例<br> 并根据实例的key判断是否需要更新，如果需要，则调用_updateRootComponent ，更新元素</p>
+</li>
+</ol>
+<pre><code>getReactRootID
+<span class="escape">`获</span>取容器的firstChild react-dataid 属性`
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/react/">react</a>
+  </div>
 
 </div>
 
@@ -124,7 +142,7 @@ Quick">
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://daddybh.github.io/2015/06/29/hello-world/" data-title="Hello World | daddybh" data-tsina="null" class="share clearfix">
+	  <div data-url="http://daddybh.github.io/2015/06/28/react-render函数剖析/" data-title="react render函数剖析 | daddybh" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -137,6 +155,14 @@ Quick">
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2015/07/13/a-successful-git-branching-model/" title="a successful git branching model">
+  <strong>上一篇：</strong><br/>
+  <span>
+  a successful git branching model</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2015/06/27/基于bower和git的前端公共资源管理/"  title="基于bower和git的前端公共资源管理">
@@ -156,7 +182,7 @@ Quick">
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+ 
  
   </div>
 
@@ -187,7 +213,11 @@ Quick">
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/git/" title="git">git<sup>2</sup></a></li>
+				<li><a href="/tags/git/" title="git">git<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/branch/" title="branch">branch<sup>2</sup></a></li>
 			
 		
 			
@@ -207,7 +237,11 @@ Quick">
 			
 		
 			
-				<li><a href="/tags/branch/" title="branch">branch<sup>1</sup></a></li>
+				<li><a href="/tags/翻译/" title="翻译">翻译<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/react/" title="react">react<sup>1</sup></a></li>
 			
 		
 		</ul>

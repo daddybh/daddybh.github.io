@@ -4,71 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>基于bower和git的前端公共资源管理 | daddybh</title>
+    <title>test post | daddybh</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Chris Cheung">
     
 
     
-    <meta name="description" content="现有问题
-现有代码基于项目，即使公用也无法共享
-
-继续抽象出来的公用模块，也需要复制到其他目录
-
-公用模块有多份代码，需维护多份代码，容易导致代码不一致
-
-更新困难，当公用模块修改一个bug时，需要搜索所有项目进行修改
-
-模块间的依赖关系混乱
-
-
-使用bower及git解决方案公用模块抽取
-公用代码抽取出来作为一个独立的git项目
-
-初始化该项目为一个bower项目
-  该目录下执行 bower">
+    <meta name="description">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基于bower和git的前端公共资源管理">
-<meta property="og:url" content="http://daddybh.github.io/2015/06/27/基于bower和git的前端公共资源管理/index.html">
+<meta property="og:title" content="test post">
+<meta property="og:url" content="http://daddybh.github.io/2015/07/13/test-post/index.html">
 <meta property="og:site_name" content="daddybh">
-<meta property="og:description" content="现有问题
-现有代码基于项目，即使公用也无法共享
-
-继续抽象出来的公用模块，也需要复制到其他目录
-
-公用模块有多份代码，需维护多份代码，容易导致代码不一致
-
-更新困难，当公用模块修改一个bug时，需要搜索所有项目进行修改
-
-模块间的依赖关系混乱
-
-
-使用bower及git解决方案公用模块抽取
-公用代码抽取出来作为一个独立的git项目
-
-初始化该项目为一个bower项目
-  该目录下执行 bower">
-<meta property="og:updated_time" content="2015-06-29T10:24:23.859Z">
+<meta property="og:description">
+<meta property="og:updated_time" content="2015-07-13T03:43:27.612Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="基于bower和git的前端公共资源管理">
-<meta name="twitter:description" content="现有问题
-现有代码基于项目，即使公用也无法共享
-
-继续抽象出来的公用模块，也需要复制到其他目录
-
-公用模块有多份代码，需维护多份代码，容易导致代码不一致
-
-更新困难，当公用模块修改一个bug时，需要搜索所有项目进行修改
-
-模块间的依赖关系混乱
-
-
-使用bower及git解决方案公用模块抽取
-公用代码抽取出来作为一个独立的git项目
-
-初始化该项目为一个bower项目
-  该目录下执行 bower">
+<meta name="twitter:title" content="test post">
+<meta name="twitter:description">
 
     
     <link rel="alternative" href="/atom.xml" title="daddybh" type="application/atom+xml">
@@ -128,14 +80,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/06/27/基于bower和git的前端公共资源管理/" title="基于bower和git的前端公共资源管理" itemprop="url">基于bower和git的前端公共资源管理</a>
+      <a href="/2015/07/13/test-post/" title="test post" itemprop="url">test post</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Chris Cheung" target="_blank" itemprop="author">Chris Cheung</a>
 		
   <p class="article-time">
-    <time datetime="2015-06-27T02:53:55.000Z" itemprop="datePublished"> 發表於 2015-06-27</time>
+    <time datetime="2015-07-13T03:43:27.000Z" itemprop="datePublished"> 發表於 2015-07-13</time>
     
   </p>
 </header>
@@ -144,83 +96,15 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#现有问题"><span class="toc-number">1.</span> <span class="toc-text">现有问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用bower及git解决方案"><span class="toc-number">2.</span> <span class="toc-text">使用bower及git解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#公用模块抽取"><span class="toc-number">2.0.1.</span> <span class="toc-text">公用模块抽取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模块安装"><span class="toc-number">2.0.2.</span> <span class="toc-text">模块安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模块更新"><span class="toc-number">2.0.3.</span> <span class="toc-text">模块更新</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意"><span class="toc-number">2.0.4.</span> <span class="toc-text">注意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题解决"><span class="toc-number">2.0.5.</span> <span class="toc-text">问题解决</span></a></li></ol></li></ol></li></ol>
+			
 		
 		</div>
 		
-		<h2 id="现有问题">现有问题</h2><ul>
-<li><p>现有代码基于项目，即使公用也无法共享</p>
-</li>
-<li><p>继续抽象出来的公用模块，也需要复制到其他目录</p>
-</li>
-<li><p>公用模块有多份代码，需维护多份代码，容易导致代码不一致</p>
-</li>
-<li><p>更新困难，当公用模块修改一个bug时，需要搜索所有项目进行修改</p>
-</li>
-<li><p>模块间的依赖关系混乱</p>
-</li>
-</ul>
-<h2 id="使用bower及git解决方案">使用bower及git解决方案</h2><h4 id="公用模块抽取">公用模块抽取</h4><ul>
-<li><p>公用代码抽取出来作为一个独立的git项目</p>
-</li>
-<li><p>初始化该项目为一个bower项目</p>
-<p>  该目录下执行 <code>bower init</code></p>
-</li>
-<li><p>添加公用代码，并把代码提交到gitlab</p>
-</li>
-</ul>
-<h4 id="模块安装">模块安装</h4><ul>
-<li><p>首先需要执行<code>bower init</code> 初始化调用目录</p>
-<p>  初始化为bower项目的目的是为了保存该项目所引用的模块</p>
-</li>
-<li><p>执行<code>bower install + git地址 --save-dev</code></p>
-<p>  例如</p>
-  <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bower </span>install http://fedgit.teiron.com/zhangbh/<span class="keyword">bower-test.git </span>--save-dev</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>代码会下载到bower_components目录下，页面可直接应用bower_components下的文件</p>
-<p>  例如</p>
-  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"bower_components/bower-test/index.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="模块更新">模块更新</h4><ul>
-<li><p>更新模块时，需要更新bower.json文件的版本号，bower通过该版本号来判断，所以记得更新公用项目时，更新版本号</p>
-</li>
-<li><p>调用方通过执行<code>bower update + 模块名</code> 来下载最新代码</p>
-</li>
-</ul>
-<h4 id="注意">注意</h4><ul>
-<li><p>抽取公用代码，保存在git服务器，公用模块必须有一定可复用性，不能依赖具体项目</p>
-</li>
-<li><p>bower_components不能提交源代码管理（git/svn）</p>
-</li>
-<li><p>用户下载代码后，执行<code>bower install</code> 安装项目依赖模块</p>
-</li>
-</ul>
-<h4 id="问题解决">问题解决</h4><ul>
-<li><p>公用模块只存一份代码</p>
-</li>
-<li><p>调用方无痛更新模块</p>
-</li>
-<li><p>模块依赖关系由bower解决 </p>
-</li>
-<li><p>提高代码复用率</p>
-</li>
-</ul>
-  
+		  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/git/">git</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/bower/">bower</a><a href="/tags/git/">git</a>
-  </div>
 
 </div>
 
@@ -228,7 +112,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://daddybh.github.io/2015/06/27/基于bower和git的前端公共资源管理/" data-title="基于bower和git的前端公共资源管理 | daddybh" data-tsina="null" class="share clearfix">
+	  <div data-url="http://daddybh.github.io/2015/07/13/test-post/" data-title="test post | daddybh" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -241,19 +125,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/06/28/react-render函数剖析/" title="react render函数剖析">
-  <strong>上一篇：</strong><br/>
-  <span>
-  react render函数剖析</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/06/27/grunt应用/"  title="grunt应用">
+<a href="/2015/07/13/a-successful-git-branching-model/"  title="a successful git branching model">
  <strong>下一篇：</strong><br/> 
- <span>grunt应用
+ <span>a successful git branching model
 </span>
 </a>
 </div>
@@ -268,7 +144,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#现有问题"><span class="toc-number">1.</span> <span class="toc-text">现有问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用bower及git解决方案"><span class="toc-number">2.</span> <span class="toc-text">使用bower及git解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#公用模块抽取"><span class="toc-number">2.0.1.</span> <span class="toc-text">公用模块抽取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模块安装"><span class="toc-number">2.0.2.</span> <span class="toc-text">模块安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模块更新"><span class="toc-number">2.0.3.</span> <span class="toc-text">模块更新</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意"><span class="toc-number">2.0.4.</span> <span class="toc-text">注意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题解决"><span class="toc-number">2.0.5.</span> <span class="toc-text">问题解决</span></a></li></ol></li></ol></li></ol>
+ 
  
   </div>
 
