@@ -96,7 +96,7 @@
         
         <h1 id="A_successful_Git_branching_model（翻译）">A successful Git branching model（翻译）</h1><p>原文链接：<br><a href="http://nvie.com/posts/a-successful-git-branching-model/" target="_blank" rel="external">http://nvie.com/posts/a-successful-git-branching-model/</a></p>
 <p>本文将介绍我在一年前，在所有项目（工作上和个人的）上引入一个开发模式，这个模式最终在实践上也很成功。<br>我之前一直想要写关于这方面的文章，但从没有时间去透彻的解析这个模式，直到现在。我不会在文中讨论关于我们项目<br>的细节，而只是介绍分支的策略和发布管理。</p>
-<p><img src="/2014/08/19/awesome-post/git-model@2x.png" alt="git模型"></p>
+<p><img src="git-model@2x.png" alt="git模型"></p>
 <p>本文只关注于git作为一个源代码管理工具相关的实践。</p>
 <h2 id="Why_git?">Why git?</h2><p>关于git与其他中心化源代码工具的利弊对比，请看这个<a href="http://git.or.cz/gitwiki/GitSvnComparsion" target="_blank" rel="external">链接</a>。<br>网上也还有很多关于这方面的争论。作为一个开发者，我在所有工具中选择了git。Git真的改变开发者对于合并与分支的想法。<br>最为一个从传统CVS/Subversion过来人，合并/分支一直是有点可怕的东西（“小心合并冲突，他们会咬你”）而且很长时间才会做一次。</p>
 <p>但是在git下，这些都是非常简单和廉价操作，也是日常工作流程中核心内容。例如，在CVS/Subversion书里面，分支与合并在最后一章<br>才会讲到（而且只针对高级用户），但是在每本git书里，基本上在第三章就会说到。</p>
