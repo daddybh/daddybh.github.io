@@ -98,17 +98,17 @@
 <p><em>发现早早就有人翻译过了，囧rz</em></p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">http:</span><span class="comment">//www.oschina.net/translate/a-successful-git-branching-model</span></span><br></pre></td></tr></table></figure>
 <p>本文将介绍我在一年前，在所有项目（工作上和个人的）上引入一个开发模式，这个模式最终在实践上也很成功。<br>我之前一直想要写关于这方面的文章，但从没有时间去透彻的解析这个模式，直到现在。我不会在文中讨论关于我们项目<br>的细节，而只是介绍分支的策略和发布管理。</p>
-<p><img src="git-model@2x.png" alt="git模型"></p>
+<img src="/2015/07/13/a-successful-git-branching-model/git-model@2x.png" alt="[git模型]" title="[git模型]">
 <p>本文只关注于git作为一个源代码管理工具相关的实践。</p>
 <h2 id="Why_git?">Why git?</h2><p>关于git与其他中心化源代码工具的利弊对比，请看这个<a href="http://git.or.cz/gitwiki/GitSvnComparsion" target="_blank" rel="external">链接</a>。<br>网上也还有很多关于这方面的争论。作为一个开发者，我在所有工具中选择了git。Git真的改变开发者对于合并与分支的想法。<br>最为一个从传统CVS/Subversion过来人，合并/分支一直是有点可怕的东西（“小心合并冲突，他们会咬你”）而且很长时间才会做一次。</p>
 <p>但是在git下，这些都是非常简单和廉价操作，也是日常工作流程中核心内容。例如，在CVS/Subversion书里面，分支与合并在最后一章<br>才会讲到（而且只针对高级用户），但是在每本git书里，基本上在第三章就会说到。</p>
 <p>由于它的简单性和重复性，不用担心分支和合并的问题。相对其他事情，版本控制工具就理应更好的协助分支/合并工作。</p>
 <p>关于工具内容就这样先，我们接着来看一下这个开发模型。这个模型实际上就是一个系列的步骤，每个团队成员都必须遵守，从而来实现一个<br>可管理的软件开发流程。</p>
 <h2 id="去中心化，但又中心化">去中心化，但又中心化</h2><p>仓库的设置和使用，也适用当前这个分支模型，也有一个中心的真正仓库。只是这个仓库被认为是中心节点（实际上git是一个分布式版本管理，<br>技术上是没有中心仓库这个概念）。我们把这个仓库称之为origin, 对于所有git用户对这个名字应该很熟悉。</p>
-<p><img src="centr-decentr@2x.png" alt="git"></p>
+<img src="/2015/07/13/a-successful-git-branching-model/centr-decentr@2x.png" alt="[git]" title="[git]">
 <p>每个开发者都往orgin 拉取/推送修改。但除了与中心节点的push-pull关系外，每个开发者之间可以形成一个子team，相互拉取修改。<br>例如，当两个或多个开发同时在开发一个较大的新功能，但是推送到origin有点早，这时候这个功能非常有用。在上图中，有这些子team<br>Alice和Bob子team，Alice 和David 以及 Clair 和David。</p>
 <p>实际技术上的实现就是，Alice建立一个git remote，命名为bob，然后指向Bob仓库，其它子team同样道理。</p>
-<h2 id="主要的分支">主要的分支</h2><p><img src="main-branches@2x.png" alt="主要的分支"></p>
+<h2 id="主要的分支">主要的分支</h2><img src="/2015/07/13/a-successful-git-branching-model/main-branches@2x.png" alt="[主要的分支]" title="[主要的分支]">
 <p>该开发模型最核心的内容，是基于上面模型的启发。中心有两个永久存在的分支</p>
 <ul>
 <li>master</li>
@@ -128,7 +128,7 @@
 </ul>
 <p>每种类型都有特定的意义，同时有严格的要求：应该从哪个分支从开始创建，一级应该最终合并到那个分支。一会我们会过一些这些细节。</p>
 <p>这些“特殊”的分支，在技术上没有什么意义，这些分支是依据我们的使用方式进行分类，它们自然跟普通分支没什么区别。</p>
-<h4 id="功能分支">功能分支</h4><p><img src="fb@2x.png" alt="feature branch"></p>
+<h4 id="功能分支">功能分支</h4><img src="/2015/07/13/a-successful-git-branching-model/fb@2x.png" alt="[feature branch]" title="[feature branch]">
 <p>由哪个分支checkout</p>
 <pre><code><span class="title">develop</span> 
 </code></pre><p>必须合并到</p>
@@ -144,7 +144,7 @@
 <p>已完成功能当确定要在接下来的发布一起发布时，会合并到develop分支</p>
 <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout develop</span><br><span class="line"><span class="keyword">Switched </span>to <span class="keyword">branch </span><span class="string">'develop'</span></span><br><span class="line">$ git merge --no-ff myfeature</span><br><span class="line"><span class="label">Updating</span> ea1b82a..<span class="number">05</span>e9557</span><br><span class="line">(Summary of changes)</span><br><span class="line">$ git <span class="keyword">branch </span>-d myfeature</span><br><span class="line"><span class="label">Deleted</span> <span class="keyword">branch </span>myfeature (was <span class="number">05</span>e9557).</span><br><span class="line">$ git <span class="keyword">push </span>origin develop</span><br></pre></td></tr></table></figure>
 <p>这里<code>--no-ff</code> 参数，merge时只会创建一个commit对象。就算是merge是<code>fast-forward</code>。这可以避免丢失功能分支的历史存在，<br>同时对所有的该功能的提交组合一起。对比：</p>
-<p><img src="merge-without-ff@2x.png" alt="no-ff"></p>
+<img src="/2015/07/13/a-successful-git-branching-model/merge-without-ff@2x.png" alt="[no-ff]" title="[no-ff]">
 <p>右边的merge方式，你无法从git历史记录中看出，那些commit是实现了某个功能，你必须通过读每条日志去分辨。<br>还原一个功能（比如一组commit），在第二种情况下是很头疼的一件事情，但加上<code>--no-ff</code>标识，则会很简单。</p>
 <p>是的，你会创建一些（空）提交对象，但是好处比这个损失多。</p>
 <p>不幸的是，目前还没有办法<code>git merge</code>时，将 <code>--no--ff</code>设置为默认，但真的需要带上这个标识。</p>
@@ -173,7 +173,7 @@
 <p>这个步骤可能会导致合并冲突（很可能，因为我们改版了版本号）。如果这样，处理冲突并提交。</p>
 <p>现在发布真正完成，发布分支可以删除，我们不再需要它。</p>
 <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="keyword">branch </span>-d release-<span class="number">1</span>.<span class="number">2</span></span><br><span class="line"><span class="label">Deleted</span> <span class="keyword">branch </span>release-<span class="number">1</span>.<span class="number">2</span> (was ff452fe).</span><br></pre></td></tr></table></figure>
-<h4 id="修复分支">修复分支</h4><p><img src="hotfix-branches@2x.png" alt="hotfix"></p>
+<h4 id="修复分支">修复分支</h4><img src="/2015/07/13/a-successful-git-branching-model/hotfix-branches@2x.png" alt="[hotfix]" title="[hotfix]">
 <p>由哪个分支checkout</p>
 <pre><code><span class="title">master</span> 
 </code></pre><p>必须合并到</p>
