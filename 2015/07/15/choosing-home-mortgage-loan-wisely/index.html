@@ -4,29 +4,30 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>react render函数剖析 | daddybh</title>
+    <title>如何选择房贷年限更划算？30年 or 20年？ | daddybh</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Chris Cheung">
     
 
     
-    <meta name="description" content="renderrender: function(nextElement, container, callback)src/renderers/dom/client/ReactMount.js#599
-render参数：nextElement 通过react.createElement创建的元素container:  nextElement的容器callback:   完成render后的回调函数
-s">
+    <meta name="description" content="最近同学买房子，问我房贷要选30年，还是20年好？我说当然选长一点，他说贷款30年贷款时间是长一些，可是利息多26万啊，于是我说：利息是多，但是得算上通货膨胀
+26万，不是个小数目。那么上面说的理由，太过于笼统，也缺乏说服力，大家都知道人民币会贬值，购买力会降低。但是还是不能确定选哪个？怎么知道20年，会不会通货膨胀到26w没了？
+只代表个人观点，对于文章中的模型，有不同的意见，欢迎一起探讨！如果">
 <meta property="og:type" content="article">
-<meta property="og:title" content="react render函数剖析">
-<meta property="og:url" content="http://daddybh.github.io/2015/06/28/react-render函数剖析/index.html">
+<meta property="og:title" content="如何选择房贷年限更划算？30年 or 20年？">
+<meta property="og:url" content="http://daddybh.github.io/2015/07/15/choosing-home-mortgage-loan-wisely/index.html">
 <meta property="og:site_name" content="daddybh">
-<meta property="og:description" content="renderrender: function(nextElement, container, callback)src/renderers/dom/client/ReactMount.js#599
-render参数：nextElement 通过react.createElement创建的元素container:  nextElement的容器callback:   完成render后的回调函数
-s">
-<meta property="og:updated_time" content="2015-07-13T07:37:30.465Z">
+<meta property="og:description" content="最近同学买房子，问我房贷要选30年，还是20年好？我说当然选长一点，他说贷款30年贷款时间是长一些，可是利息多26万啊，于是我说：利息是多，但是得算上通货膨胀
+26万，不是个小数目。那么上面说的理由，太过于笼统，也缺乏说服力，大家都知道人民币会贬值，购买力会降低。但是还是不能确定选哪个？怎么知道20年，会不会通货膨胀到26w没了？
+只代表个人观点，对于文章中的模型，有不同的意见，欢迎一起探讨！如果">
+<meta property="og:image" content="http://daddybh.github.io/2015/07/15/choosing-home-mortgage-loan-wisely/excel.png">
+<meta property="og:updated_time" content="2015-07-15T10:42:19.791Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="react render函数剖析">
-<meta name="twitter:description" content="renderrender: function(nextElement, container, callback)src/renderers/dom/client/ReactMount.js#599
-render参数：nextElement 通过react.createElement创建的元素container:  nextElement的容器callback:   完成render后的回调函数
-s">
+<meta name="twitter:title" content="如何选择房贷年限更划算？30年 or 20年？">
+<meta name="twitter:description" content="最近同学买房子，问我房贷要选30年，还是20年好？我说当然选长一点，他说贷款30年贷款时间是长一些，可是利息多26万啊，于是我说：利息是多，但是得算上通货膨胀
+26万，不是个小数目。那么上面说的理由，太过于笼统，也缺乏说服力，大家都知道人民币会贬值，购买力会降低。但是还是不能确定选哪个？怎么知道20年，会不会通货膨胀到26w没了？
+只代表个人观点，对于文章中的模型，有不同的意见，欢迎一起探讨！如果">
 
     
     <link rel="alternative" href="/atom.xml" title="daddybh" type="application/atom+xml">
@@ -86,14 +87,14 @@ s">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/06/28/react-render函数剖析/" title="react render函数剖析" itemprop="url">react render函数剖析</a>
+      <a href="/2015/07/15/choosing-home-mortgage-loan-wisely/" title="如何选择房贷年限更划算？30年 or 20年？" itemprop="url">如何选择房贷年限更划算？30年 or 20年？</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Chris Cheung" target="_blank" itemprop="author">Chris Cheung</a>
 		
   <p class="article-time">
-    <time datetime="2015-06-28T09:42:55.000Z" itemprop="datePublished"> 發表於 2015-06-28</time>
+    <time datetime="2015-07-15T08:21:56.000Z" itemprop="datePublished"> 發表於 2015-07-15</time>
     
   </p>
 </header>
@@ -102,30 +103,86 @@ s">
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#案例分析与比较"><span class="toc-number">1.</span> <span class="toc-text">案例分析与比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何计算通货膨胀？"><span class="toc-number">2.</span> <span class="toc-text">如何计算通货膨胀？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-1w_划算否？"><span class="toc-number">3.</span> <span class="toc-text">7.1w 划算否？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数学比较"><span class="toc-number">3.0.1.</span> <span class="toc-text">数学比较</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#直观因素比较"><span class="toc-number">3.0.2.</span> <span class="toc-text">直观因素比较</span></a></li></ol></li></ol></li></ol>
 		
 		</div>
 		
-		<p>render<br><code>render: function(nextElement, container, callback)</code><br>src/renderers/dom/client/ReactMount.js#599</p>
-<p>render参数：<br>nextElement 通过react.createElement创建的元素<br>container:  nextElement的容器<br>callback:   完成render后的回调函数</p>
-<p>step1:</p>
-<p>src\shared\vendor\core\invariant.js<br>invariant 当条件为false时，抛出异常<br>src\shared\vendor\core\waring.js<br>warnging  当条件为false时，在控制台打印第二个参数的文字</p>
-<p>调用 _renderSubtreeIntoContainer</p>
-<ol>
-<li><p>判断nextElement是否为一个object，且有_isReactElement 属性，并抛出异常</p>
-</li>
-<li><p>如果容器是body，输出warning信息</p>
-</li>
-<li><p>检查容器是否已经渲染了其它的component</p>
-<p> 如果已经渲染，判断nextElement跟缓存中的element 是否一致</p>
-<pre><code>如果不一致，且缓存中id已经变化，则抛出异常
-如果是同个元素，则更新nodeCache-&gt;新传入的rootNode
-</code></pre><p> 如果已经渲染，根据rootID（从getReactRootID获取）， 从instancesByReactRootID缓存中获取一个实例<br> 并根据实例的key判断是否需要更新，如果需要，则调用_updateRootComponent ，更新元素</p>
-</li>
-</ol>
-<pre><code>getReactRootID
-<span class="escape">`获</span>取容器的firstChild react-dataid 属性`
-</code></pre>  
+		<p>最近同学买房子，问我房贷要选30年，还是20年好？我说当然选长一点，他说贷款30年贷款时间是长一些，可是利息多26万啊，于是我说：<code>利息是多，但是得算上通货膨胀</code></p>
+<p>26万，不是个小数目。那么上面说的理由，太过于笼统，也缺乏说服力，大家都知道人民币会贬值，购买力会降低。但是还是不能确定选哪个？怎么知道20年，会不会通货膨胀到26w没了？</p>
+<p>只代表个人观点，对于文章中的模型，有不同的意见，欢迎一起探讨！如果你是土豪，请直接付全款:P</p>
+<h2 id="案例分析与比较">案例分析与比较</h2><ul>
+<li>贷款总额: 89w</li>
+<li>30年月供: 4427, 总额： 159.37w</li>
+<li>20年月供: 5555，总额： 133.32w</li>
+<li>20年月供，每月多1k</li>
+<li>30年月供总额比20年多 <code>26w</code>，也就是要多付26w的利息</li>
+</ul>
+<p>30年还款总额 - 20年还款总额 </p>
+<figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">159.37w - 133.32w </span>=<span class="string"> 26.05w</span></span><br></pre></td></tr></table></figure>
+<p><strong>26w, 26w, 26w!!!!! 好多好多钱!!!!!</strong></p>
+<h2 id="如何计算通货膨胀？">如何计算通货膨胀？</h2><p>如何计算通货膨胀，需要解决两个问题：</p>
+<ul>
+<li>通货膨胀需要用一个数值来表示</li>
+<li>利用通货膨胀，基于当前月供数，算出一个基于当前时间的价值</li>
+</ul>
+<p>为了，解决上面两个问题，又做了下面三个假设条件</p>
+<ul>
+<li>使用央行基准利率作为通货膨胀率</li>
+<li>假设 通货膨胀率 &gt;= 央行基准利率</li>
+<li>假设每年通货膨胀一样</li>
+</ul>
+<p>计算方式：</p>
+<ul>
+<li>通货膨胀率：π</li>
+<li>每年月供总额：p</li>
+<li>折算后第t年的价格: pt</li>
+</ul>
+<p>计算公式:</p>
+<figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">pt </span>=<span class="string"> p * (1 - π)^t</span></span><br></pre></td></tr></table></figure>
+<p>于是就有下面这个excel表格：</p>
+<img src="/2015/07/15/choosing-home-mortgage-loan-wisely/excel.png" alt="[现值]" title="[现值]">
+<a href="/2015/07/15/choosing-home-mortgage-loan-wisely/贷款利率对比.xls" title="excel下载">excel下载</a>
+<p>最终按照2015年央行基准利率2.5%计算，则有：</p>
+<figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">30年现值总额 - 20年现值总额 </span>=<span class="string"> 71331</span></span><br></pre></td></tr></table></figure>
+<p>也即：折算成当前价值，30年月供需要比20年多支付<code>7.1w</code>的利息</p>
+<h2 id="7-1w_划算否？">7.1w 划算否？</h2><h4 id="数学比较">数学比较</h4><p>首先，上面使用基准利率2.5%作为通货膨胀率，然而通过查阅国家统计局网站，过去五年的<a href="http://data.stats.gov.cn/easyquery.htm?cn=C01&amp;zb=A0901&amp;sj=2014" target="_blank" rel="external">居民消费水平</a> 如下表：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>2014</th>
+<th>2013</th>
+<th>2012</th>
+<th>2011</th>
+<th>2010</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>居民消费价格指数(上年=100)</td>
+<td>102.0</td>
+<td>102.6</td>
+<td>102.6</td>
+<td>105.4</td>
+<td>103.3</td>
+</tr>
+</tbody>
+</table>
+<p>取平均值得<code>3.18%</code>，将这个指标替换基准利率后，得出：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">30年现值总额 - 20年现值总额 = <span class="number">39085.88744</span></span><br></pre></td></tr></table></figure>
+<p>按照3.18%算，实际只需多支付<code>3.9w</code>！</p>
+<p>那么如果按照支付7.1w, 会如何？</p>
+<ul>
+<li>相对于20年期贷款，前20年你多出了21.5w资金</li>
+<li>你需要为这21w资金多付出7.1w利息</li>
+<li>因此, 30年期贷款的最后10年，你需总共支付28.64w</li>
+</ul>
+<p>这21.5w的贷款利率为：</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r = <span class="number">7.1</span>/<span class="comment">(21.5*10)</span> = <span class="number">0.033</span> = <span class="number">3.3</span><span class="preprocessor">%</span></span><br></pre></td></tr></table></figure>
+<p>3.3%作为20年后的贷款利率可以说是非常低的，当前公积金贷款利率是3.5%，所以说，还是相当的划算。</p>
+<h4 id="直观因素比较">直观因素比较</h4><p>直观上，就好像其它朋友说的，每月多1k闲钱，当你结婚生子后，会发现可以让你生活过得舒服很多！</p>
+<p>当你还是单身时，你可以把这笔钱存起来，或者做一些投资，比如放余额宝或者炒股:) </p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -133,7 +190,7 @@ s">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/react/">react</a>
+  <span></span> <a href="/tags/房贷/">房贷</a><a href="/tags/金融/">金融</a>
   </div>
 
 </div>
@@ -142,7 +199,7 @@ s">
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://daddybh.github.io/2015/06/28/react-render函数剖析/" data-title="react render函数剖析 | daddybh" data-tsina="null" class="share clearfix">
+	  <div data-url="http://daddybh.github.io/2015/07/15/choosing-home-mortgage-loan-wisely/" data-title="如何选择房贷年限更划算？30年 or 20年？ | daddybh" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -155,19 +212,11 @@ s">
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/07/13/a-successful-git-branching-model/" title="a successful git branching model">
-  <strong>上一篇：</strong><br/>
-  <span>
-  a successful git branching model</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/06/27/基于bower和git的前端公共资源管理/"  title="基于bower和git的前端公共资源管理">
+<a href="/2015/07/13/a-successful-git-branching-model/"  title="a successful git branching model">
  <strong>下一篇：</strong><br/> 
- <span>基于bower和git的前端公共资源管理
+ <span>a successful git branching model
 </span>
 </a>
 </div>
@@ -182,7 +231,7 @@ s">
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#案例分析与比较"><span class="toc-number">1.</span> <span class="toc-text">案例分析与比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何计算通货膨胀？"><span class="toc-number">2.</span> <span class="toc-text">如何计算通货膨胀？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-1w_划算否？"><span class="toc-number">3.</span> <span class="toc-text">7.1w 划算否？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数学比较"><span class="toc-number">3.0.1.</span> <span class="toc-text">数学比较</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#直观因素比较"><span class="toc-number">3.0.2.</span> <span class="toc-text">直观因素比较</span></a></li></ol></li></ol></li></ol>
  
   </div>
 
