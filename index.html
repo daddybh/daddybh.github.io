@@ -378,26 +378,57 @@
 </header>
     <div class="article-content">
         
-        <p>render<br><code>render: function(nextElement, container, callback)</code><br>src/renderers/dom/client/ReactMount.js#599</p>
-<p>render参数：<br>nextElement 通过react.createElement创建的元素<br>container:  nextElement的容器<br>callback:   完成render后的回调函数</p>
-<p>step1:</p>
-<p>src\shared\vendor\core\invariant.js<br>invariant 当条件为false时，抛出异常<br>src\shared\vendor\core\waring.js<br>warnging  当条件为false时，在控制台打印第二个参数的文字</p>
-<p>调用 _renderSubtreeIntoContainer</p>
-<ol>
-<li><p>判断nextElement是否为一个object，且有_isReactElement 属性，并抛出异常</p>
-</li>
-<li><p>如果容器是body，输出warning信息</p>
-</li>
-<li><p>检查容器是否已经渲染了其它的component</p>
-<p> 如果已经渲染，判断nextElement跟缓存中的element 是否一致</p>
-<pre><code>如果不一致，且缓存中id已经变化，则抛出异常
-如果是同个元素，则更新nodeCache-&gt;新传入的rootNode
-</code></pre><p> 如果已经渲染，根据rootID（从getReactRootID获取）， 从instancesByReactRootID缓存中获取一个实例<br> 并根据实例的key判断是否需要更新，如果需要，则调用_updateRootComponent ，更新元素</p>
+        <p>react通过一个React.render函数来渲染启动一个app，具体这个函数都做了些什么事情？其实jsx编译过后，render函数中的html都转换成一堆<code>React.createElement</code>的代码，最终生成一个<code>ReactElement</code>传入到render函数</p>
+<h2 id="ReactElement数据结构">ReactElement数据结构</h2><p><code>React.createElement</code> 接收函数接收两个及以上参数:</p>
+<ul>
+<li>type 通过React.createClass创建的类型</li>
+<li>props 元素的属性值</li>
+<li>其它参数： 该元素的直接子级元素</li>
+</ul>
+<p>最终生成ReactElement是一个树形结构，子元素保存在<code>_store.props</code>属性中</p>
+<img src="/2015/06/28/react-render函数剖析/ReactElement.png" alt="ReactElement树形结构" title="ReactElement树形结构">
+<h2 id="render函数">render函数</h2><p>ReactElement树创建之后，通过React.render方法，将树生成具体的html，并渲染到对应的容器中。</p>
+<h4 id="参数">参数</h4><ul>
+<li>nextElement ReactElement对象，通过React.createElement创建</li>
+<li>container 页面容器</li>
+<li>callback 回调函数</li>
+</ul>
+<h2 id="render主要流程">render主要流程</h2><ol>
+<li>对nextElement的合法性进行校验</li>
+<li>检查container是否已经渲染过React组件</li>
+<li>开始调用<code>_renderNewRootComponent</code>渲染</li>
+</ol>
+<h4 id="nextElement_合法性校验">nextElement 合法性校验</h4><p>主要通过ReactElement的<code>_isReactElement</code> 属性判断，如果非法则抛出异常</p>
+<h4 id="检查container是否已经渲染过React组件">检查container是否已经渲染过React组件</h4><ol>
+<li>根据ReactElement，从缓存查找是否存在preComponent</li>
+<li><p>调用shouldUpdateReactComponent，检查是更新，还是替换原来节点</p>
+<p> 如果需要更新，调用ReactMount._updateRootComponent更新原来节点(具体细节后续再补充，本文先针对正常流程)</p>
+<p> 如果不需要更新，则调用unmountComponentAtNode，删除旧节点，然后执行一个全新的mount操作</p>
 </li>
 </ol>
-<pre><code>getReactRootID
-<span class="escape">`获</span>取容器的firstChild react-dataid 属性`
-</code></pre>
+<h4 id="_renderNewRootComponent内部调用流程图">_renderNewRootComponent内部调用流程图</h4><p><em>Transaction概念</em></p>
+<pre><code>从源代码的注释可以看到，Transaction.perform 方法提供了一个执行函数的黑盒，
+
+在函数开始时执行wrapper的<span class="escape">`i</span>nitialize<span class="escape">`方</span>法，结束后调用<span class="escape">`c</span>lose<span class="escape">`方</span>法。
+
+Transaction作为一个基类，其它Transaction可以从它继承perform方法。
+</code></pre><p>TransactionWrapper，是一个提供<code>initialize</code>和<code>close</code>方法的简单对象</p>
+<p>Transaction 可以通过重写<code>getTransactionWrappers</code>来返回wrapper数组</p>
+<p>Transaction 主要用途：</p>
+<ul>
+<li>恢复input的选中状态</li>
+<li>在渲染时，禁用类似blur/focus事件，渲染结束后，重新启用</li>
+<li>批量更新DOM元素的修改</li>
+<li>渲染新内容后，调用所有的<code>componentDidUpdate</code>函数</li>
+</ul>
+<p>_renderNewRootComponent 在两个Transaction中执行：</p>
+<ul>
+<li>ReactDefaultBatchingStrategyTransaction 用于启动批量渲染</li>
+<li>ReactReconcileTransaction 执行渲染及子元素的渲染</li>
+</ul>
+<p>下面是一个渲染全新React组件的核心流程:</p>
+<img src="/2015/06/28/react-render函数剖析/renderNewRootComponent.png" alt="render内部函数调用关系" title="render内部函数调用关系">
+
         
         
         <p class="article-more-link">
