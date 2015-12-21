@@ -1,0 +1,582 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>D2 前端大会总结 | daddybh</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Chris Cheung">
+    
+
+    
+    <meta name="description" content="Preface有幸参加大阿里举行的D2前端大会，今天看到知乎也有类似参加D2是什么体验和你有什么收获？之类的提问，同去的同事也在写总结，所以我也稍微总结一下，也对得起这来回的机票钱 :)
+这次大会的主题是融合, 知乎上的网友这么解读的, 说得真好，我这里把它引用过来。。
+1234567著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。作者：徐飞链接：https://www.zhi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="D2 前端大会总结">
+<meta property="og:url" content="http://daddybh.github.io/2015/12/21/d2-summary/index.html">
+<meta property="og:site_name" content="daddybh">
+<meta property="og:description" content="Preface有幸参加大阿里举行的D2前端大会，今天看到知乎也有类似参加D2是什么体验和你有什么收获？之类的提问，同去的同事也在写总结，所以我也稍微总结一下，也对得起这来回的机票钱 :)
+这次大会的主题是融合, 知乎上的网友这么解读的, 说得真好，我这里把它引用过来。。
+1234567著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。作者：徐飞链接：https://www.zhi">
+<meta property="og:updated_time" content="2015-12-21T08:54:20.047Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="D2 前端大会总结">
+<meta name="twitter:description" content="Preface有幸参加大阿里举行的D2前端大会，今天看到知乎也有类似参加D2是什么体验和你有什么收获？之类的提问，同去的同事也在写总结，所以我也稍微总结一下，也对得起这来回的机票钱 :)
+这次大会的主题是融合, 知乎上的网友这么解读的, 说得真好，我这里把它引用过来。。
+1234567著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。作者：徐飞链接：https://www.zhi">
+
+    
+    <link rel="alternative" href="/atom.xml" title="daddybh" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/avatar.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/avatar.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="daddybh">daddybh</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:daddybh.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/12/21/d2-summary/" title="D2 前端大会总结" itemprop="url">D2 前端大会总结</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Chris Cheung" target="_blank" itemprop="author">Chris Cheung</a>
+		
+  <p class="article-time">
+    <time datetime="2015-12-21T06:10:04.000Z" itemprop="datePublished"> 發表於 2015-12-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Preface"><span class="toc-number">1.</span> <span class="toc-text">Preface</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用_Node-js_构建海量页面渲染服务"><span class="toc-number">2.</span> <span class="toc-text">用 Node.js 构建海量页面渲染服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题2，稳定性"><span class="toc-number">2.0.1.</span> <span class="toc-text">问题2，稳定性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题3：koa中间件异常"><span class="toc-number">2.0.2.</span> <span class="toc-text">问题3：koa中间件异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题6：CDN缓存机制"><span class="toc-number">2.0.3.</span> <span class="toc-text">问题6：CDN缓存机制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手机淘宝Hybrid性能优化实战"><span class="toc-number">3.</span> <span class="toc-text">手机淘宝Hybrid性能优化实战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#alinode与Node应用性能管理"><span class="toc-number">4.</span> <span class="toc-text">alinode与Node应用性能管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Node-js加速Qzone"><span class="toc-number">5.</span> <span class="toc-text">Node.js加速Qzone</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题1：_架构模型"><span class="toc-number">5.0.1.</span> <span class="toc-text">问题1： 架构模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题4：_发布机制"><span class="toc-number">5.0.2.</span> <span class="toc-text">问题4： 发布机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问提5：_日志记录"><span class="toc-number">5.0.3.</span> <span class="toc-text">问提5： 日志记录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DataV数据可视化引擎"><span class="toc-number">6.</span> <span class="toc-text">DataV数据可视化引擎</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="Preface">Preface</h2><p>有幸参加大阿里举行的D2前端大会，今天看到知乎也有类似<code>参加D2是什么体验</code>和<code>你有什么收获？</code>之类的提问，<br>同去的同事也在写总结，所以我也稍微总结一下，也对得起这来回的机票钱 :)</p>
+<p>这次大会的主题是<code>融合</code>, 知乎上的网友这么解读的, 说得真好，我这里把它引用过来。。</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">著作权归作者所有。</span><br><span class="line">商业转载请联系作者获得授权，非商业转载请注明出处。</span><br><span class="line">作者：徐飞</span><br><span class="line">链接：https://www.zhihu.com/question/<span class="number">38637676</span>/answer/<span class="number">77516017</span></span><br><span class="line">来源：知乎</span><br><span class="line"></span><br><span class="line">今年是第十届d2，主题是融合，确实，今年的主要话题有三块，一块仍然是新框架和前端方案的探索，一块是node相关的深入应用，一块是最贴近主题的融合，也就是多端合一的技术方案。</span><br></pre></td></tr></table></figure>
+<p>其实说直白了，主要涵盖了几个方面：</p>
+<ul>
+<li>react-native</li>
+<li>nodejs</li>
+<li>一些轮子</li>
+</ul>
+<p>此行目的也很简单：</p>
+<ol>
+<li>关注nodejs在各个企业中的实践经验及技术架构</li>
+<li>关注讲师们演讲风格/技巧</li>
+</ol>
+<p>下面也学知乎上的回答，对我听过每个议题的内容做一下总结：</p>
+<h2 id="用_Node-js_构建海量页面渲染服务">用 Node.js 构建海量页面渲染服务</h2><p>这个是第一场演讲，干货非常多，比较惊喜的一场演讲，也很惊讶在阿里内部对于nodejs有如此广泛的应用<br>整个演讲可以听出，nodejs在手淘中，主要用于<code>业务逻辑处理，html渲染</code>上，也就是</p>
+<ul>
+<li>nodejs替换了中间层（php），后端原来干嘛还是干嘛，该提供接口还是得提供接口</li>
+<li>页面渲染还是在nodejs端，不是单页模式(SPA)</li>
+<li>接口中转(私有协议代理等)</li>
+</ul>
+<p>边听边记录一些实践上具体疑问，准备最后QA环节提问，后面主持人没看到我，坐山顶的同学比较吃亏！！！<br>不过大部分问题也都得到答案，这里列一下当时准备的一些问题，其中一些演讲过程中，就解答了这些问题。<br>不得不说，演讲者内容方面准备得非常充分。</p>
+<p>问题列表：</p>
+<ol>
+<li>架构模型是如何？</li>
+<li>如何保证nodejs稳定性？</li>
+<li>koa中间件出现异常之后，会如何处理？</li>
+<li>发布机制</li>
+<li>日志记录</li>
+<li>CDN缓存机制</li>
+</ol>
+<p>其中第2，3，6个问题，讲师在后面的演讲中都有提到，总结一下：</p>
+<h4 id="问题2，稳定性">问题2，稳定性</h4><ul>
+<li>单元测试，单元测试，单元测试</li>
+<li>编写可测试代码</li>
+<li>代码覆盖率</li>
+<li>cfork/graceful（这里也提到为什么不用pm2，跟我目前实践是一样的pm/graceful，有种原来他们也这么做感觉）</li>
+<li>日志记录，错误预警（短信，邮件）</li>
+<li>容灾机制</li>
+</ul>
+<h4 id="问题3：koa中间件异常">问题3：koa中间件异常</h4><p>这个问题后面给出了答案，koa中间件的异常并不会导致挂掉，而是会在类似<code>app.onerror</code>的函数中统一处理，<br>做一些日志记录，致命错误做告警之类的</p>
+<h4 id="问题6：CDN缓存机制">问题6：CDN缓存机制</h4><p>讲师提到他们用到了CDN缓存，一开始以为只是对js/css这些静态资源进行缓存，而实际上，不仅于此，他们还对实际的渲染出来<br>的页面进行缓存，而具体的推送/刷新机制，他们内部应该有一套比较成熟的CDN方案，后面有机会再去详细了解一下，这个已经也超出<br>前端解决的范围。</p>
+<p>问题 1、4、5 这几个问题，本来想休息时候请教一下讲师，由于时间关系，一直到会议结束，才找了Qzone的同学问了相同的问题，(-__-)b~</p>
+<h2 id="手机淘宝Hybrid性能优化实战">手机淘宝Hybrid性能优化实战</h2><p>这场有两个同学一起讲的，原以为会有react native相关的实践，其实主要是一些性能优化方面的建议以及他们hybird实现的方案，<br>优化的建议后面PPT出来之后都可以看到，这里就不赘述了，而hybird这一块挺有意思的，类似于，定义一些html标签属性，通过截获<br>这些属性，把原来的标签替换成原生组件。这里我就在YY，如果浏览器外壳能够支持这个功能，那么写出来的webapp交互体验上就非常棒了。</p>
+<h2 id="alinode与Node应用性能管理">alinode与Node应用性能管理</h2><p>下午场抱着膜拜大牛的心情， 听了<code>朴灵</code>的<code>alinode与Node应用性能管理</code>, 2年前就买过他的<code>深入浅出nodejs</code>，这本书真心不错，通俗易懂，推荐一下。<br>听完整场的演讲，给我的印象是，<code>腼腆的技术型奶爸</code>，没有很花俏的ppt，没有俏皮的话，甚至现场互动都有点尴尬，但是有全面准备的示例代码和演示。</p>
+<p>分享的内容主要是围绕着alinode及阿里云提供的在线分析工具，主要功能就是在node端提供一个类似Chrome开发工具的Profiler，依赖于alinode，可以对<br>线上实时Profile，实时抓取堆快照，然后利用他们提供的在线分析工具，排查线上<code>内存泄漏</code>和<code>CPU异常飙升</code> 的问题。</p>
+<h2 id="Node-js加速Qzone">Node.js加速Qzone</h2><p>这场分享后面才进来，演讲嘉宾感觉很有气场，也有一些互动，因为是nodejs相关，也听得比较认真，这里罗列了一些关键点：</p>
+<ul>
+<li>QQ nodejs装机量260台，qzone是80台服务+60台代理</li>
+<li>砍掉nginx代理，node直接提供http</li>
+<li>服务端渲染首屏（这个与手淘是一致的）</li>
+<li>本地html快照缓存，提升css响应速度</li>
+<li>服务端的fidller日志，实时日志下载</li>
+<li>流水日志</li>
+</ul>
+<p>Qzone在nodejs的使用上更加激进，直接把nginx这一层去掉了，他们如何做负载均衡的，会后跟这位同学了解到，<br>在他们的网络层，还有另外一层做这个事情，可以更完整的做流量控制。</p>
+<p>上面提到的1，4，5 问题也在会后跟他沟通</p>
+<h4 id="问题1：_架构模型">问题1： 架构模型</h4><p>这个其实是想问手淘那边的架构模型，后面找机会再去了解一下。Qzone 在这个问题上就是，直接让nodejs作为一层中转代理，也是他在演讲<br>说的接入层，同事也做html模板渲染，协议转换等</p>
+<h4 id="问题4：_发布机制">问题4： 发布机制</h4><p>由于他们有260台nodejs服务器，所以我想到，这么多服务器，他们发布程序是怎么进行的<br>会后了解到，他分两部分解释，一个是nodejs的装机，另外一个是业务程序发布</p>
+<ul>
+<li>nodejs 发布是可执行文件和依赖包一起打包，统一发布到各个服务器</li>
+<li>业务打包，业务代码与node_module一起打包，统一发布各个服务器</li>
+</ul>
+<p>这里他还提到一点，node_module他们是直接提交svn服务器，然后打包时候，从svn拉取，打包，再发布<br>这里有点惊讶，难道他们是不知道<code>npm shrinkwrap</code>？</p>
+<h4 id="问提5：_日志记录">问提5： 日志记录</h4><p>对于线上的日志记录，他们有一套日志系统和流水系统，应该是有专门的团队做这个事情</p>
+<ul>
+<li>日志系统用于记录服务器端的每次操作，执行的动作</li>
+<li>流水记录则记录服务端收到的网络请求，完整的记录http请求的请求/回复，记录与其它接口的交互，并按照fiddler的文件格式进行存储</li>
+</ul>
+<h2 id="DataV数据可视化引擎">DataV数据可视化引擎</h2><p>逼格颜值最高一场分享！分享嘉宾很会讲，在台上淡定自如，思路清晰，很喜欢这样的演讲风格。这里列一下一些关键点：</p>
+<ul>
+<li>性能上 webgl &gt; svg &gt; canvas</li>
+<li>大屏幕可以通过组合屏形式实现</li>
+<li>静态内容可以使用canvas绘制</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/D2-前端大会-JS-前端圈/">D2, 前端大会, JS, 前端圈</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://daddybh.github.io/2015/12/21/d2-summary/" data-title="D2 前端大会总结 | daddybh" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/07/15/choosing-home-mortgage-loan-wisely/"  title="如何选择房贷年限更划算？30年 or 20年？">
+ <strong>下一篇：</strong><br/> 
+ <span>如何选择房贷年限更划算？30年 or 20年？
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Preface"><span class="toc-number">1.</span> <span class="toc-text">Preface</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用_Node-js_构建海量页面渲染服务"><span class="toc-number">2.</span> <span class="toc-text">用 Node.js 构建海量页面渲染服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题2，稳定性"><span class="toc-number">2.0.1.</span> <span class="toc-text">问题2，稳定性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题3：koa中间件异常"><span class="toc-number">2.0.2.</span> <span class="toc-text">问题3：koa中间件异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题6：CDN缓存机制"><span class="toc-number">2.0.3.</span> <span class="toc-text">问题6：CDN缓存机制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手机淘宝Hybrid性能优化实战"><span class="toc-number">3.</span> <span class="toc-text">手机淘宝Hybrid性能优化实战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#alinode与Node应用性能管理"><span class="toc-number">4.</span> <span class="toc-text">alinode与Node应用性能管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Node-js加速Qzone"><span class="toc-number">5.</span> <span class="toc-text">Node.js加速Qzone</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题1：_架构模型"><span class="toc-number">5.0.1.</span> <span class="toc-text">问题1： 架构模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题4：_发布机制"><span class="toc-number">5.0.2.</span> <span class="toc-text">问题4： 发布机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问提5：_日志记录"><span class="toc-number">5.0.3.</span> <span class="toc-text">问提5： 日志记录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DataV数据可视化引擎"><span class="toc-number">6.</span> <span class="toc-text">DataV数据可视化引擎</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/git/" title="git">git<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工程化/" title="工程化">工程化<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工程化/" title="工程化">工程化<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/branch/" title="branch">branch<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/grunt/" title="grunt">grunt<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/构建/" title="构建">构建<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/react/" title="react">react<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/bower/" title="bower">bower<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/D2-前端大会-JS-前端圈/" title="D2, 前端大会, JS, 前端圈">D2, 前端大会, JS, 前端圈<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/房贷/" title="房贷">房贷<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/翻译/" title="翻译">翻译<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Talk less, write more. <br/>
+			This is my blog, believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/daddybh" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		<a href="https://www.linkedin.com/in/binghui" target="_blank" class="icon-linkedin" title="linkedin"></a>
+		
+		
+		
+		<a href="http://www.zhihu.com/people/daddybh" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:chrischeung.bh@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="Chris Cheung">Chris Cheung</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-65211914-1', 'http://daddybh.github.io');  
+ga('send', 'pageview');
+</script>
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F3F67341f442bc6de1aeeb639ff42d153cb' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
