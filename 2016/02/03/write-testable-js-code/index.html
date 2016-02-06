@@ -1,0 +1,563 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>编写可测试js | daddybh</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Chris Cheung">
+    
+
+    
+    <meta name="description" content="先前参加了D2，其中天猫的不四 在 用 Node.js 构建海量页面渲染服务分享中，关于稳定性提到并重复三次的一个事情就是：单元测试
+之前做项目的时候，也曾经使用mocha写一些单元测试，开始写了部分接口单元测试后，就没再坚持下去。至于为什么没坚持下去，后面我再分析。但是打从心底觉得，单元测试是开发中很重要的一环，乘着年前稍微空闲，总结一下对于单元测试的一些想法。
+为什么没坚持回想先前的一些项目的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编写可测试js">
+<meta property="og:url" content="http://daddybh.github.io/2016/02/03/write-testable-js-code/index.html">
+<meta property="og:site_name" content="daddybh">
+<meta property="og:description" content="先前参加了D2，其中天猫的不四 在 用 Node.js 构建海量页面渲染服务分享中，关于稳定性提到并重复三次的一个事情就是：单元测试
+之前做项目的时候，也曾经使用mocha写一些单元测试，开始写了部分接口单元测试后，就没再坚持下去。至于为什么没坚持下去，后面我再分析。但是打从心底觉得，单元测试是开发中很重要的一环，乘着年前稍微空闲，总结一下对于单元测试的一些想法。
+为什么没坚持回想先前的一些项目的">
+<meta property="og:image" content="http://daddybh.github.io/2016/02/03/write-testable-js-code/mindmap.png">
+<meta property="og:updated_time" content="2016-02-06T06:29:09.213Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编写可测试js">
+<meta name="twitter:description" content="先前参加了D2，其中天猫的不四 在 用 Node.js 构建海量页面渲染服务分享中，关于稳定性提到并重复三次的一个事情就是：单元测试
+之前做项目的时候，也曾经使用mocha写一些单元测试，开始写了部分接口单元测试后，就没再坚持下去。至于为什么没坚持下去，后面我再分析。但是打从心底觉得，单元测试是开发中很重要的一环，乘着年前稍微空闲，总结一下对于单元测试的一些想法。
+为什么没坚持回想先前的一些项目的">
+
+    
+    <link rel="alternative" href="/atom.xml" title="daddybh" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/avatar.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/avatar.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="daddybh">daddybh</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:daddybh.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/02/03/write-testable-js-code/" title="编写可测试js" itemprop="url">编写可测试js</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Chris Cheung" target="_blank" itemprop="author">Chris Cheung</a>
+		
+  <p class="article-time">
+    <time datetime="2016-02-03T06:59:05.000Z" itemprop="datePublished"> 發表於 2016-02-03</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么没坚持"><span class="toc-number">1.</span> <span class="toc-text">为什么没坚持</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#费时间，拖进度"><span class="toc-number">1.0.1.</span> <span class="toc-text">费时间，拖进度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#有时候觉得很傻逼"><span class="toc-number">1.0.2.</span> <span class="toc-text">有时候觉得很傻逼</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#无法模拟真实环境"><span class="toc-number">1.0.3.</span> <span class="toc-text">无法模拟真实环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#不清晰应该测试哪些内容"><span class="toc-number">1.0.4.</span> <span class="toc-text">不清晰应该测试哪些内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#信心"><span class="toc-number">1.0.5.</span> <span class="toc-text">信心</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#撸棒性"><span class="toc-number">1.0.6.</span> <span class="toc-text">撸棒性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#可维护性"><span class="toc-number">1.0.7.</span> <span class="toc-text">可维护性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何做好单元测试"><span class="toc-number">2.</span> <span class="toc-text">如何做好单元测试</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#编写可测试代码"><span class="toc-number">2.0.1.</span> <span class="toc-text">编写可测试代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单元测试工具选型"><span class="toc-number">2.0.2.</span> <span class="toc-text">单元测试工具选型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单元测试原则"><span class="toc-number">2.0.3.</span> <span class="toc-text">单元测试原则</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<p>先前参加了D2，其中天猫的<code>不四</code> 在 <code>用 Node.js 构建海量页面渲染服务</code>分享中，关于稳定性提到并重复三次的一个事情就是：<code>单元测试</code></p>
+<p>之前做项目的时候，也曾经使用mocha写一些单元测试，开始写了部分接口单元测试后，就没再坚持下去。至于为什么没坚持下去，后面我再分析。<br>但是打从心底觉得，单元测试是开发中很重要的一环，乘着年前稍微空闲，总结一下对于单元测试的一些想法。</p>
+<h2 id="为什么没坚持">为什么没坚持</h2><p>回想先前的一些项目的情况：一开始，下很大决心，准备完善的编写测试，可是写着写着，就没坚持下来，这是为啥呢？</p>
+<p>分析原因有几个：</p>
+<h4 id="费时间，拖进度">费时间，拖进度</h4><p>单元测试往往会占用一半或以上开发时间，从开发感觉上，就会自己进度变得缓慢，心里有点慌，就没继续写下去了</p>
+<h4 id="有时候觉得很傻逼">有时候觉得很傻逼</h4><p>有时候一些接口比较简单，写的过程，就会觉得，我明知道这个代码的执行结果（输出）了，还写这个测试代码？有意义吗？</p>
+<h4 id="无法模拟真实环境">无法模拟真实环境</h4><p>有时候，有些代码，运行在webview下或者接口依赖于内部的某些api，模拟环境依赖于mocha这些库很难做到，这时候，要写单元测试起来，就很麻烦了<br>于是，干脆就算了~~￣□￣｜｜</p>
+<h4 id="不清晰应该测试哪些内容">不清晰应该测试哪些内容</h4><p>我们都知道，单元测试，在于构造一些场景出来，作为输入条件，然后最终期待正确的接口，这里就涉及到一个场景构造的问题，一个接口对外暴露给别人使用，<br>我们就得预测各种场景，所以一个非常简单的函数，就得构建不少的场景，心里会有一堆堆的场景出现，</p>
+<ol>
+<li>参数A未传的情况，参数B未传的情况~~</li>
+<li>上下场景不存在的情况</li>
+<li>参数缺失要不要做处理</li>
+<li>数据类型要不要验证下，要不要判断，转换一下？</li>
+<li>。。。</li>
+</ol>
+<p>一个简单函数，得写多少个单元测试，心里压力就上来啦<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;#### &#37096;&#20221;&#20195;&#30721;&#26080;&#27861;&#27979;&#35797;&#10;&#10;&#20808;&#21069;&#30340;&#39033;&#30446;&#65292;&#22522;&#26412;&#19978;&#26159;&#29992;seajs &#65292;&#21311;&#21517;&#38381;&#21253; &#25110; commonjs &#36827;&#34892;&#27169;&#22359;&#21270;&#65292;&#21482;&#33021;&#23545;&#23545;&#22806;&#26292;&#38706;&#30340;&#25509;&#21475;&#36827;&#34892;&#27979;&#35797;&#65292;&#27979;&#35797;&#33539;&#22260;&#26377;&#38480;&#12290;&#22312;&#27809;&#20102;&#35299;`rewire` &#25110; `jest`&#10;&#20043;&#21069;&#65292;&#35273;&#24471;&#21333;&#32431;&#27979;&#35797;&#25509;&#21475;&#65292;&#25928;&#26524;&#19981;&#22823;&#65292;&#21621;&#21621;&#21621;~~&#37027;&#23601;&#31639;&#20102;~~&#10;&#10;&#24635;&#32467;&#20026;&#20160;&#20040;&#27809;&#22362;&#25345;&#19979;&#26469;&#65292;&#23601;&#20004;&#20010;&#23383;&#65306;&#10;&#10;```&#10;    &#40635;&#28902;&#10;```&#10;&#10;## &#20026;&#20160;&#20040;&#36824;&#24471;&#22362;&#25345;&#10;&#10;&#20998;&#26512;&#20102;&#20043;&#21069;&#20026;&#21861;&#27809;&#22362;&#25345;&#65292;&#30340;&#30830;&#40635;&#28902;&#65292;&#30495;&#24515;&#40635;&#28902;&#65292;&#26500;&#36896;&#22330;&#26223;&#65292;&#20889;&#21333;&#20803;&#27979;&#35797;&#65292;&#25913;&#28304;&#30721;&#65292;&#20877;&#27979;&#65292;&#20877;&#25913;</span><br></pre></td></tr></table></figure></p>
+<p>但是，纵观各个编程语言，无不强调单元测试的重要性，更有甚者（<code>golang</code>），直接集成单元测试相关的库，可见在质量保障上的地位。<br>坚持下去肯定是必须的，它会给我们带来什么好处？</p>
+<h4 id="信心">信心</h4><p>信心源自于对代码的掌控，对代码的把握在于单元测试。有完善的单元测试，能够建立起对项目代码的信心。毕竟，这些代码都通过了单元测试，<br>预料之中，预料之外的情况，都做了考虑，无需担忧。</p>
+<h4 id="撸棒性">撸棒性</h4><p>程序的稳定，在于不同场景下，能够经得起折腾，不轻易down机，这就需要我们单元场景中，多考虑各种情况，编写代码解决这些情况，<br>遇到问题，解决问题的同时，编写对应的单元测试，不断完善测试覆盖面</p>
+<h4 id="可维护性">可维护性</h4><p>程序员最讨厌的事情，就是维护别的系统。但却是大部分人工作的主要内容，如果有幸参与从零开始的项目，为了防止被后人骂得太厉害，单元测试还是写一下吧。<br>为什么要写呢？单元测试其实就是示例，当人家看不懂代码时，看看你的单元测试，大概就可以猜测出，你的函数、接口是干嘛用的了。</p>
+<p>同时，当别人改你代码时候，可能并不是通读整个系统代码，就开改了，这时候，单元测试就保障了你的程序，不会被改坏~~</p>
+<h2 id="如何做好单元测试">如何做好单元测试</h2><p>既然好处多多，那么接下来聊聊怎么才能写好单元测试</p>
+<h4 id="编写可测试代码">编写可测试代码</h4><p>首先考虑到单元测试的同学，对代码质量要求肯定不低，下面整理了一个思维导向图，主要描述如何才能保证产出的代码有一定得可测试性。<br>总之一句：<code>编写优雅代码</code>, 让阅读你代码的人，觉得是件赏心悦目的事情，而不是煎熬。</p>
+<img src="/2016/02/03/write-testable-js-code/mindmap.png" alt="[现值]" title="[现值]">
+<h4 id="单元测试工具选型">单元测试工具选型</h4><p>最近总结部门内部使用的公用库，用到技术栈为： <code>karma + mocha + chai + rewire + phantomjs</code>，仅供参考，这里想说一下，<br>不要纠结于选什么测试库或者runner，选一个你熟悉的就可以开始干活，没用过的话选一个github上star多的</p>
+<ul>
+<li>karma 是一个test runner，配置简单，插件丰富，不需要你写静态脚本</li>
+<li>mocha 单元测试库</li>
+<li>chai  断言库</li>
+<li>rewire 依赖注入库</li>
+<li>phantomjs 用于CI服务器自动测试使用 </li>
+</ul>
+<p>rewire 是一个非常不错的依赖注入库，上面提到的<code>部份代码无法测试</code>问题，通过这个库轻松的解决，类似的还有facebook出品的<code>jest</code></p>
+<h4 id="单元测试原则">单元测试原则</h4><p>首先，单元测试行覆盖率越高越好，但是也无需过滤纠结那个数字。当你做的是一个业务项目，能够覆盖基本的场景就可以了，对于公用库，<br>则需要提高一定得覆盖率，大家一看你测试覆盖率90%以上，用起来也有信心。</p>
+<p>如果写业务代码，考虑基本的场景就可以了，代码进行相应处理，不用过于杞人忧天，考虑非常多不可能出现的情况，代码也不至于过于罗嗦和臃肿。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/js-unit-test/">js, unit test</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://daddybh.github.io/2016/02/03/write-testable-js-code/" data-title="编写可测试js | daddybh" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/12/21/d2-summary/"  title="D2 前端大会总结">
+ <strong>下一篇：</strong><br/> 
+ <span>D2 前端大会总结
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/02/03/write-testable-js-code/" data-title="编写可测试js" data-url="http://daddybh.github.io/2016/02/03/write-testable-js-code/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么没坚持"><span class="toc-number">1.</span> <span class="toc-text">为什么没坚持</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#费时间，拖进度"><span class="toc-number">1.0.1.</span> <span class="toc-text">费时间，拖进度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#有时候觉得很傻逼"><span class="toc-number">1.0.2.</span> <span class="toc-text">有时候觉得很傻逼</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#无法模拟真实环境"><span class="toc-number">1.0.3.</span> <span class="toc-text">无法模拟真实环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#不清晰应该测试哪些内容"><span class="toc-number">1.0.4.</span> <span class="toc-text">不清晰应该测试哪些内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#信心"><span class="toc-number">1.0.5.</span> <span class="toc-text">信心</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#撸棒性"><span class="toc-number">1.0.6.</span> <span class="toc-text">撸棒性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#可维护性"><span class="toc-number">1.0.7.</span> <span class="toc-text">可维护性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何做好单元测试"><span class="toc-number">2.</span> <span class="toc-text">如何做好单元测试</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#编写可测试代码"><span class="toc-number">2.0.1.</span> <span class="toc-text">编写可测试代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单元测试工具选型"><span class="toc-number">2.0.2.</span> <span class="toc-text">单元测试工具选型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单元测试原则"><span class="toc-number">2.0.3.</span> <span class="toc-text">单元测试原则</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分類</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/git/" title="git">git<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工程化/" title="工程化">工程化<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工程化/" title="工程化">工程化<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/branch/" title="branch">branch<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/grunt/" title="grunt">grunt<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/构建/" title="构建">构建<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/bower/" title="bower">bower<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/js-unit-test/" title="js, unit test">js, unit test<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/react/" title="react">react<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/D2-前端大会-JS-前端圈/" title="D2, 前端大会, JS, 前端圈">D2, 前端大会, JS, 前端圈<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/房贷/" title="房贷">房贷<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/翻译/" title="翻译">翻译<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://cnblogs.com" target="_blank" title="博客园">博客园</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://lisarao.github.io/blog/" target="_blank" title="lisarao">lisarao</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Talk less, write more. <br/>
+			This is my blog, believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/daddybh" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		<a href="https://www.linkedin.com/in/binghui" target="_blank" class="icon-linkedin" title="linkedin"></a>
+		
+		
+		
+		<a href="http://www.zhihu.com/people/daddybh" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:chrischeung.bh@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Chris Cheung">Chris Cheung</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"daddybh"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-65211914-1', 'http://daddybh.github.io');  
+ga('send', 'pageview');
+</script>
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F7baddccbbeee505e4067dfc888c72978' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
